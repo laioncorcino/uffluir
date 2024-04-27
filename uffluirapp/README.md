@@ -1,4 +1,4 @@
-# uffluirapp
+# uffluir
 
 A new Flutter project.
 
