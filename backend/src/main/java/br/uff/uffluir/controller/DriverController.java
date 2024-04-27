@@ -22,7 +22,7 @@ public class DriverController {
     }
 
     @PostMapping()
-    public ResponseEntity<DriverResponse> create(@RequestBody @Valid DriverRequest driverRequest, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DriverResponse> create(@RequestBody @Valid DriverRequest driverRequest) {
         Driver driver = driverService.createDriver(driverRequest);
         return ResponseEntity.ok(new DriverResponse(driver));
     }
