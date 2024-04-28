@@ -3,6 +3,7 @@ import 'pages/home.dart';
 
 void main() {
   runApp(MaterialApp(
+      //da pra usar o comentado abaixo como referência pra fazer as telas
       initialRoute: "/",
       /*routes: {
         Tela2.routeName: (context) => Tela2(),

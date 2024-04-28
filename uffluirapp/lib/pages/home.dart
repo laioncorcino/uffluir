@@ -12,14 +12,22 @@ FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
 Size size = view.physicalSize;
 
 class _HomeState extends State<Home> {
-  String pesquisa = '';
+  //controllers pro selecionador de data e hora
+  TextEditingController _dateController = TextEditingController();
+  TimeOfDay _hourSelect = TimeOfDay
+      .now(); //esse aqui é pra ele "começar" na hora atual, explico la embaixo
+  TextEditingController _hourController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
           title: Row(children: [
             Container(
-                padding: EdgeInsets.only(left: 8, right: size.width / 5),
+                padding: EdgeInsets.only(
+                    left: 8,
+                    right: size.width /
+                        5.5), //a posição da imagem à direita tá definida com base na distância em relação ao texto. Foi a melhor forma de fazer que achei
                 child: Text("Buscar",
                     style: const TextStyle(
                       fontSize: 30.0,
@@ -33,78 +41,199 @@ class _HomeState extends State<Home> {
             ),
           ]),
           backgroundColor: Color.fromARGB(255, 0, 71, 159),
-        ),
+        ), //fim da appbar
         body: ListView(children: [
+          //aqui começam as coisas na tela, os buscadores e a imagem
           Stack(children: [
-            Stack(children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 45, left: 35, right: 35),
-                  child: SearchBar(
-                    leading:
-                        IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
-                    hintText: "Local de Partida",
-                    hintStyle: MaterialStateProperty.all(TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20)),
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(165, 0, 79, 121)),
-                    trailing: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.search),
-                      )
-                    ],
-                  )),
-            ]),
             Padding(
-                padding: EdgeInsets.only(top: 245, left: 35, right: 35),
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 30),
-                    SearchBar(
-                      backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(165, 0, 79, 121)),
-                      leading:
-                          IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
-                      hintText: "Destino",
-                      hintStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      trailing: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search),
-                        )
-                      ],
+                padding: EdgeInsets.only(
+                    top: 45,
+                    left: 35,
+                    right:
+                        35), //valores precisam ser atualizados pra ficar em função da tela
+                child: SearchBar(
+                  //aqui é a primeira SearchBar, a de local de partida
+                  textStyle: MaterialStateProperty.all(TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
+                  leading: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.menu)), //icone da esquerda
+                  hintText: "Local de Partida",
+                  hintStyle: MaterialStateProperty.all(TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
+                  backgroundColor: MaterialStateProperty.all(
+                      Color.fromARGB(165, 0, 79, 121)),
+                  trailing: [
+                    //icone da direita
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.search),
                     )
                   ],
                 )),
+            Padding(
+                //imagem do mapa
+                padding: EdgeInsets.only(
+                    top: 95,
+                    left: 35,
+                    right:
+                        35), //valores precisam ser atualizados pra ficar em função da tela
+                child: Image.asset(
+                  'images/ImagemMapa.png',
+                  height:
+                      200, //valores precisam ser atualizados pra ficar em função da tela
+                  alignment: Alignment.center,
+                )),
+            Padding(
+                //mais uma search bar, essa é a de destino
+                padding: EdgeInsets.only(
+                    top: 275,
+                    left: 35,
+                    right:
+                        35), //valores precisam ser atualizados pra ficar em função da tela
+                child: SearchBar(
+                  textStyle: MaterialStateProperty.all(TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
+                  backgroundColor: MaterialStateProperty.all(
+                      Color.fromARGB(165, 0, 79, 121)),
+                  leading: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.menu)), //icone da esquerda
+                  hintText: "Destino",
+                  hintStyle: MaterialStateProperty.all(TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
+                  trailing: [
+                    //icone da direita
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.search),
+                    )
+                  ],
+                )),
+            Padding(
+                //bloco de data
+                padding: EdgeInsets.only(top: 345, left: 45, right: 45),
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
+                  controller:
+                      _dateController, //chamar o controller de data pra atualizar o texto
+                  decoration: InputDecoration(
+                    labelText: 'Data',
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 205, 203, 203),
+                    suffixIcon: Icon(Icons.calendar_today),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
+                  ),
+                  readOnly: true,
+                  onTap: () {
+                    _selectDate(); //chama a função de seleção de data(tá no final do codigo)
+                  },
+                )),
+            Padding(
+                //bloco de hora
+                padding: EdgeInsets.only(top: 445, left: 45, right: 45),
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
+                  controller:
+                      _hourController, //chama o controller de hora pra atualizar o texto
+                  decoration: InputDecoration(
+                    labelText: 'Hora',
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 205, 203, 203),
+                    suffixIcon: Icon(Icons.timer),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
+                  ),
+                  readOnly: true,
+                  onTap: () {
+                    _selectTime(); //chama a função de selecionar hora quando clicado
+                  },
+                )),
+            Padding(
+                //Botão de "Buscar" no fim da tela
+                padding: EdgeInsets.only(
+                    top: 545,
+                    left: 130,
+                    right:
+                        45), //valores precisam ser atualizados pra ficar em função da tela
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 0, 71, 159),
+                        foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                        minimumSize: Size(15, 45),
+                        textStyle: TextStyle(fontSize: 25)),
+                    child: Text("Buscar"),
+                    onPressed: () => ()))
           ]),
         ]),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed, // Fixed
-          backgroundColor:
-              Color.fromARGB(255, 0, 71, 159), // <-- This works for fixed
+          //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color.fromARGB(255, 0, 71, 159),
           selectedItemColor: Colors.grey,
           unselectedItemColor: Colors.grey,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home), //Icone de Home
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.help),
+              icon: Icon(Icons.help), //Icone de Suporte
               label: 'Suporte',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.car_rental),
+              icon: Icon(
+                  Icons.time_to_leave), //Icone de Carro no "Minhas Caronas"
               label: 'Minhas Caronas',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person), //Icone Perfil
               label: 'Perfil',
             )
           ],
         ));
+  }
+
+  Future<void> _selectDate() async {
+    //função de seleção de data
+    DateTime? _picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime
+            .now(), //pega a data inicial, ou seja, o dia mais antigo que pode ser selecionado. Botei o dia atual, sempre
+        firstDate: DateTime
+            .now(), //a primeira data selecionável também é sempre o dia atual, pra ninguém pedir carona ontem
+        lastDate: DateTime(
+            2100)); //Botei 2100 como a ultima data selecionável, mas queria uma forma de fixar no maximo x dias à frente
+
+    if (_picked != null) {
+      //quando é selecionado algo diferente de null, coloca o texto da data no controller pra ir pro bloco de texto la em cima.
+      setState(() {
+        _dateController.text = _picked.toString().split(" ")[0];
+      });
+    }
+  }
+
+  Future<void> _selectTime() async {
+    //função de seleção de hora
+    TimeOfDay? _picked =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+    if (_picked != null) {
+      //quando é selecionado algo diferente de null, coloca o texto da hora no controller pra ir pro bloco de texto la em cima.
+      setState(() {
+        _hourSelect = _picked;
+        _hourController.text =
+            "${_hourSelect.hour}:${_hourSelect.minute}"; //a diferença aqui é que precisei pegar parcialmente, se não a formatação ficaria estranha. Mas nem se preocupa
+      });
+    }
   }
 }
