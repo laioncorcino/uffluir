@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
+import 'pages/support.dart';
+import 'pages/perfil.dart';
+import 'pages/minhasCaronas.dart';
 
 void main() {
   runApp(MaterialApp(
       //da pra usar o comentado abaixo como referência pra fazer as telas
       initialRoute: "/",
-      /*routes: {
-        Tela2.routeName: (context) => Tela2(),
-        "/tela3": (context) => Tela3()
+      routes: {
+        "/home": (context) => const Home(),
+        "/support": (context) => const Support(),
+        "/perfil": (context) => const Perfil(),
+        "/minhasCaronas": (context) => const MinhasCaronas(),
       },
-      onGenerateRoute: (settings) {
-        if (settings.name == Tela2.routeName) {
-          final args = settings.arguments as ScreenArguments;
-
-          return MaterialPageRoute(
-              builder: (context) => Tela2.arguments(args!.message));
-        }
-      },*/
       title: "Navegação",
       debugShowCheckedModeBanner: false,
       home: Home()));

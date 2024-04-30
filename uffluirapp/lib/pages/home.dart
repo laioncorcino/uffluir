@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'support.dart';
+import 'minhasCaronas.dart';
+import 'perfil.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -183,20 +186,33 @@ class _HomeState extends State<Home> {
           unselectedItemColor: Colors.grey,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home), //Icone de Home
-              label: 'Home',
-            ),
+                icon: IconButton(
+                  icon: Icon(Icons.home),
+                  onPressed: () => {Navigator.pushNamed(context, '/home')},
+                ), //
+                label: 'Home'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.help), //Icone de Suporte
+              icon: IconButton(
+                icon: Icon(Icons.help),
+                onPressed: () => {Navigator.pushNamed(context, '/support')},
+              ), //Icone de Suporte
               label: 'Suporte',
+
+              //activeIcon: Support()
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                  Icons.time_to_leave), //Icone de Carro no "Minhas Caronas"
+              icon: IconButton(
+                icon: Icon(Icons.time_to_leave),
+                onPressed: () =>
+                    {Navigator.pushNamed(context, '/minhasCaronas')},
+              ), //Icone de Carro no "Minhas Caronas"
               label: 'Minhas Caronas',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person), //Icone Perfil
+              icon: IconButton(
+                icon: Icon(Icons.person),
+                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
+              ), //Icone Perfil
               label: 'Perfil',
             )
           ],
