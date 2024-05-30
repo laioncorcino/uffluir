@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20)),
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(165, 0, 79, 121)),
+                          Color.fromARGB(165, 5, 69, 82)),
                       trailing: [
                         //icone da direita
                         IconButton(
@@ -81,24 +81,29 @@ class _HomeState extends State<Home> {
                     )),
                 Padding(
                     //imagem do mapa
-                    padding: EdgeInsets.all(
-                        10), //valores precisam ser atualizados pra ficar em função da tela
+                    padding: EdgeInsets.only(
+                        right: 35,
+                        left:
+                            35), //valores precisam ser atualizados pra ficar em função da tela
                     child: Image.asset(
                       'images/ImagemMapa.png',
+                      width: 500,
                       height:
-                          200, //valores precisam ser atualizados pra ficar em função da tela
+                          150, //valores precisam ser atualizados pra ficar em função da tela
                       alignment: Alignment.center,
                     )),
                 Padding(
                     //mais uma search bar, essa é a de destino
-                    padding: EdgeInsets.all(
-                        35), //valores precisam ser atualizados pra ficar em função da tela
+                    padding: EdgeInsets.only(
+                        left: 35,
+                        right:
+                            35), //valores precisam ser atualizados pra ficar em função da tela
                     child: SearchBar(
                       textStyle: MaterialStateProperty.all(TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20)),
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(165, 0, 79, 121)),
+                          Color.fromARGB(165, 5, 69, 82)),
                       leading: IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.menu)), //icone da esquerda
@@ -116,7 +121,7 @@ class _HomeState extends State<Home> {
                     )),
                 Padding(
                     //bloco de data
-                    padding: EdgeInsets.all(35),
+                    padding: EdgeInsets.only(top: 20, right: 35, left: 35),
                     child: TextField(
                       style: TextStyle(color: Colors.black),
                       controller:
@@ -128,10 +133,10 @@ class _HomeState extends State<Home> {
                         suffixIcon: Icon(Icons.calendar_today),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 0, 71, 159))),
+                                color: Color.fromARGB(255, 5, 69, 82))),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 0, 71, 159))),
+                                color: Color.fromARGB(255, 5, 69, 82))),
                       ),
                       readOnly: true,
                       onTap: () {
@@ -140,7 +145,7 @@ class _HomeState extends State<Home> {
                     )),
                 Padding(
                     //bloco de hora
-                    padding: EdgeInsets.all(35),
+                    padding: EdgeInsets.only(top: 20, right: 35, left: 35),
                     child: TextField(
                       style: TextStyle(color: Colors.black),
                       controller:
@@ -152,10 +157,10 @@ class _HomeState extends State<Home> {
                         suffixIcon: Icon(Icons.timer),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 0, 71, 159))),
+                                color: Color.fromARGB(255, 5, 69, 82))),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 0, 71, 159))),
+                                color: Color.fromARGB(255, 5, 69, 82))),
                       ),
                       readOnly: true,
                       onTap: () {
@@ -164,11 +169,14 @@ class _HomeState extends State<Home> {
                     )),
                 Padding(
                     //Botão de "Buscar" no fim da tela
-                    padding: EdgeInsets.all(
-                        35), //valores precisam ser atualizados pra ficar em função da tela
+                    padding: EdgeInsets.only(
+                        top: 20,
+                        left: 35,
+                        right:
+                            35), //valores precisam ser atualizados pra ficar em função da tela
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 0, 71, 159),
+                            backgroundColor: Color.fromARGB(255, 5, 69, 82),
                             foregroundColor: Color.fromARGB(255, 255, 255, 255),
                             minimumSize: Size(15, 45),
                             textStyle: TextStyle(fontSize: 25)),
@@ -314,9 +322,9 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 0, 71, 159),
-          selectedItemColor: Colors.grey,
-          unselectedItemColor: Colors.grey,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          selectedItemColor: Color.fromARGB(255, 54, 54, 54),
+          unselectedItemColor: Color.fromARGB(255, 54, 54, 54),
           items: [
             BottomNavigationBarItem(
                 icon: IconButton(

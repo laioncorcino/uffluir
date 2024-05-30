@@ -22,32 +22,30 @@ class _PerfilState extends State<Perfil> {
           automaticallyImplyLeading: false, // Remove o botão de voltar no topo
           //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
           title: Row(children: [
-            Container(
-                padding: EdgeInsets.only(
-                    left: 8,
-                    right: size.width /
-                        5.5), //a posição da imagem à direita tá definida com base na distância em relação ao texto. Foi a melhor forma de fazer que achei
-                child: Text("Perfil",
-                    style: const TextStyle(
-                      fontSize: 30.0,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontWeight: FontWeight.bold,
-                    ))),
+            Expanded(
+                child: Container(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text("Perfil",
+                        style: const TextStyle(
+                          fontSize: 30.0,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontWeight: FontWeight.bold,
+                        )))),
             Image.asset(
               'images/passageiro-icon.png',
               height: 40,
-              alignment: Alignment.center,
+              alignment: Alignment.centerRight,
             ),
           ]),
-          backgroundColor: Color.fromARGB(255, 0, 71, 159),
+          backgroundColor: Color(0xFF054552),
         ), //fim da appbar
         body: ListView(),
         bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 0, 71, 159),
-          selectedItemColor: Colors.grey,
-          unselectedItemColor: Colors.grey,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          selectedItemColor: Color.fromARGB(255, 54, 54, 54),
+          unselectedItemColor: Color.fromARGB(255, 54, 54, 54),
           items: [
             BottomNavigationBarItem(
                 icon: IconButton(
