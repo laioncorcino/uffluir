@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'screen_arguments.dart';
 import 'support.dart';
 import 'minhasCaronas.dart';
 import 'perfil.dart';
@@ -24,28 +25,160 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false, // Remove o botão de voltar no topo
           //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
           title: Row(children: [
-            Container(
-                padding: EdgeInsets.only(
-                    left: 8,
-                    right: size.width /
-                        5.5), //a posição da imagem à direita tá definida com base na distância em relação ao texto. Foi a melhor forma de fazer que achei
-                child: Text("Buscar",
-                    style: const TextStyle(
-                      fontSize: 30.0,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontWeight: FontWeight.bold,
-                    ))),
+            Expanded(
+                child: Container(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text("Buscar",
+                        style: const TextStyle(
+                          fontSize: 30.0,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontWeight: FontWeight.bold,
+                        )))),
             Image.asset(
               'images/passageiro-icon.png',
               height: 40,
-              alignment: Alignment.center,
+              alignment: Alignment.centerRight,
             ),
           ]),
-          backgroundColor: Color.fromARGB(255, 0, 71, 159),
-        ), //fim da appbar
-        body: ListView(children: [
+          backgroundColor: Color(0xFF054552),
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(
+                        top: 45,
+                        left: 35,
+                        right:
+                            35), //valores precisam ser atualizados pra ficar em função da tela
+                    child: SearchBar(
+                      //aqui é a primeira SearchBar, a de local de partida
+                      textStyle: MaterialStateProperty.all(TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20)),
+                      leading: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.menu)), //icone da esquerda
+                      hintText: "Local de Partida",
+                      hintStyle: MaterialStateProperty.all(TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(165, 0, 79, 121)),
+                      trailing: [
+                        //icone da direita
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.search),
+                        )
+                      ],
+                    )),
+                Padding(
+                    //imagem do mapa
+                    padding: EdgeInsets.all(
+                        10), //valores precisam ser atualizados pra ficar em função da tela
+                    child: Image.asset(
+                      'images/ImagemMapa.png',
+                      height:
+                          200, //valores precisam ser atualizados pra ficar em função da tela
+                      alignment: Alignment.center,
+                    )),
+                Padding(
+                    //mais uma search bar, essa é a de destino
+                    padding: EdgeInsets.all(
+                        35), //valores precisam ser atualizados pra ficar em função da tela
+                    child: SearchBar(
+                      textStyle: MaterialStateProperty.all(TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(165, 0, 79, 121)),
+                      leading: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.menu)), //icone da esquerda
+                      hintText: "Destino",
+                      hintStyle: MaterialStateProperty.all(TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20)),
+                      trailing: [
+                        //icone da direita
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.search),
+                        )
+                      ],
+                    )),
+                Padding(
+                    //bloco de data
+                    padding: EdgeInsets.all(35),
+                    child: TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller:
+                          _dateController, //chamar o controller de data pra atualizar o texto
+                      decoration: InputDecoration(
+                        labelText: 'Data',
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 205, 203, 203),
+                        suffixIcon: Icon(Icons.calendar_today),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 0, 71, 159))),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 0, 71, 159))),
+                      ),
+                      readOnly: true,
+                      onTap: () {
+                        _selectDate(); //chama a função de seleção de data(tá no final do codigo)
+                      },
+                    )),
+                Padding(
+                    //bloco de hora
+                    padding: EdgeInsets.all(35),
+                    child: TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller:
+                          _hourController, //chama o controller de hora pra atualizar o texto
+                      decoration: InputDecoration(
+                        labelText: 'Hora',
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 205, 203, 203),
+                        suffixIcon: Icon(Icons.timer),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 0, 71, 159))),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 0, 71, 159))),
+                      ),
+                      readOnly: true,
+                      onTap: () {
+                        _selectTime(); //chama a função de selecionar hora quando clicado
+                      },
+                    )),
+                Padding(
+                    //Botão de "Buscar" no fim da tela
+                    padding: EdgeInsets.all(
+                        35), //valores precisam ser atualizados pra ficar em função da tela
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 0, 71, 159),
+                            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                            minimumSize: Size(15, 45),
+                            textStyle: TextStyle(fontSize: 25)),
+                        child: Text("Buscar"),
+                        onPressed: () => ()))
+              ],
+            ),
+          ),
+        ),
+        /*ListView(children: [
           //aqui começam as coisas na tela, os buscadores e a imagem
           Stack(children: [
             Padding(
@@ -177,7 +310,7 @@ class _HomeState extends State<Home> {
                     child: Text("Buscar"),
                     onPressed: () => ()))
           ]),
-        ]),
+        ]),*/
         bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
