@@ -4,24 +4,25 @@ import 'screen_arguments.dart';
 import 'support.dart';
 import 'minhasCaronas.dart';
 import 'perfil.dart';
-import 'homeMoto.dart';
+import 'home.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomeMoto extends StatefulWidget {
+  const HomeMoto({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeMoto> createState() => _HomeMotoState();
 }
 
 FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
 Size size = view.physicalSize;
 
-class _HomeState extends State<Home> {
+class _HomeMotoState extends State<HomeMoto> {
   //controllers pro selecionador de data e hora
   TextEditingController _dateController = TextEditingController();
   TimeOfDay _hourSelect = TimeOfDay
       .now(); //esse aqui é pra ele "começar" na hora atual, explico la embaixo
   TextEditingController _hourController = TextEditingController();
+  TextEditingController _hourController2 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +33,7 @@ class _HomeState extends State<Home> {
             Expanded(
                 child: Container(
                     padding: EdgeInsets.only(left: 8),
-                    child: Text("Buscar",
+                    child: Text("Ofertar",
                         style: const TextStyle(
                           fontSize: 30.0,
                           color: Color.fromARGB(255, 255, 255, 255),
@@ -40,16 +41,16 @@ class _HomeState extends State<Home> {
                         )))),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/homeMoto');
+                Navigator.pushNamed(context, '/home');
               }, // Image tapped
               child: Image.asset(
-                'images/passageiro-icon.png',
+                'images/motorista-icon.png',
                 height: 40,
                 alignment: Alignment.centerRight,
               ),
-            )
+            ),
           ]),
-          backgroundColor: Color(0xFF054552),
+          backgroundColor: Color.fromARGB(255, 153, 77, 0),
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -58,8 +59,48 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
+                    //Botão de "Buscar" no fim da tela
                     padding: EdgeInsets.only(
-                        top: 45,
+                        top: 35,
+                        left: 50,
+                        right:
+                            50), //valores precisam ser atualizados pra ficar em função da tela
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: BeveledRectangleBorder(),
+                            side: BorderSide(
+                              width: 0.5,
+                              color: Color.fromARGB(255, 88, 88, 88),
+                            ),
+                            backgroundColor: Color.fromARGB(255, 213, 213, 212),
+                            foregroundColor: Color.fromARGB(255, 2, 0, 0),
+                            minimumSize: Size(350, 55),
+                            textStyle: TextStyle(fontSize: 15)),
+                        child: Text("Carro provisório"),
+                        onPressed: () => ())),
+                Padding(
+                    //Botão de "Buscar" no fim da tela
+                    padding: EdgeInsets.only(
+                        top: 5,
+                        left: 50,
+                        right:
+                            50), //valores precisam ser atualizados pra ficar em função da tela
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: BeveledRectangleBorder(),
+                            side: BorderSide(
+                              width: 0.5,
+                              color: Color.fromARGB(255, 88, 88, 88),
+                            ),
+                            backgroundColor: Color.fromARGB(255, 213, 213, 212),
+                            foregroundColor: Color.fromARGB(255, 2, 0, 0),
+                            minimumSize: Size(350, 55),
+                            textStyle: TextStyle(fontSize: 15)),
+                        child: Text("Cadastrar Novo Veículo"),
+                        onPressed: () => ())),
+                Padding(
+                    padding: EdgeInsets.only(
+                        top: 20,
                         left: 35,
                         right:
                             35), //valores precisam ser atualizados pra ficar em função da tela
@@ -76,7 +117,7 @@ class _HomeState extends State<Home> {
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20)),
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(165, 5, 69, 82)),
+                          Color.fromARGB(255, 237, 144, 49)),
                       trailing: [
                         //icone da direita
                         IconButton(
@@ -86,21 +127,9 @@ class _HomeState extends State<Home> {
                       ],
                     )),
                 Padding(
-                    //imagem do mapa
-                    padding: EdgeInsets.only(
-                        right: 35,
-                        left:
-                            35), //valores precisam ser atualizados pra ficar em função da tela
-                    child: Image.asset(
-                      'images/ImagemMapa.png',
-                      width: 500,
-                      height:
-                          150, //valores precisam ser atualizados pra ficar em função da tela
-                      alignment: Alignment.center,
-                    )),
-                Padding(
                     //mais uma search bar, essa é a de destino
                     padding: EdgeInsets.only(
+                        top: 20,
                         left: 35,
                         right:
                             35), //valores precisam ser atualizados pra ficar em função da tela
@@ -109,7 +138,7 @@ class _HomeState extends State<Home> {
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20)),
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(165, 5, 69, 82)),
+                          Color.fromARGB(255, 237, 144, 49)),
                       leading: IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.menu)), //icone da esquerda
@@ -117,6 +146,34 @@ class _HomeState extends State<Home> {
                       hintStyle: MaterialStateProperty.all(TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20)),
+                      trailing: [
+                        //icone da direita
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.search),
+                        )
+                      ],
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(
+                        top: 20,
+                        left: 35,
+                        right:
+                            35), //valores precisam ser atualizados pra ficar em função da tela
+                    child: SearchBar(
+                      //aqui é a primeira SearchBar, a de local de partida
+                      textStyle: MaterialStateProperty.all(TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20)),
+                      leading: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.menu)), //icone da esquerda
+                      hintText: "Itinerário",
+                      hintStyle: MaterialStateProperty.all(TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 237, 144, 49)),
                       trailing: [
                         //icone da direita
                         IconButton(
@@ -139,40 +196,78 @@ class _HomeState extends State<Home> {
                         suffixIcon: Icon(Icons.calendar_today),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 5, 69, 82))),
+                                color: Color.fromARGB(255, 237, 144, 49))),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 5, 69, 82))),
+                                color: Color.fromARGB(255, 237, 144, 49))),
                       ),
                       readOnly: true,
                       onTap: () {
                         _selectDate(); //chama a função de seleção de data(tá no final do codigo)
                       },
                     )),
-                Padding(
-                    //bloco de hora
-                    padding: EdgeInsets.only(top: 20, right: 35, left: 35),
-                    child: TextField(
-                      style: TextStyle(color: Colors.black),
-                      controller:
-                          _hourController, //chama o controller de hora pra atualizar o texto
-                      decoration: InputDecoration(
-                        labelText: 'Hora',
-                        filled: true,
-                        fillColor: Color.fromARGB(255, 205, 203, 203),
-                        suffixIcon: Icon(Icons.timer),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 5, 69, 82))),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 5, 69, 82))),
-                      ),
-                      readOnly: true,
-                      onTap: () {
-                        _selectTime(); //chama a função de selecionar hora quando clicado
-                      },
-                    )),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              //bloco de hora
+                              padding:
+                                  EdgeInsets.only(top: 20, right: 10, left: 10),
+                              child: TextField(
+                                style: TextStyle(color: Colors.black),
+                                controller:
+                                    _hourController, //chama o controller de hora pra atualizar o texto
+                                decoration: InputDecoration(
+                                  labelText: 'Hora Ida',
+                                  filled: true,
+                                  fillColor: Color.fromARGB(255, 205, 203, 203),
+                                  suffixIcon: Icon(Icons.timer),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 237, 144, 49))),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 237, 144, 49))),
+                                ),
+                                readOnly: true,
+                                onTap: () {
+                                  _selectTime(
+                                      1); //chama a função de selecionar hora quando clicado
+                                },
+                              ))),
+                      Expanded(
+                          child: Padding(
+                              //bloco de hora
+                              padding:
+                                  EdgeInsets.only(top: 20, right: 10, left: 10),
+                              child: TextField(
+                                style: TextStyle(color: Colors.black),
+                                controller:
+                                    _hourController2, //chama o controller de hora pra atualizar o texto
+                                decoration: InputDecoration(
+                                  labelText: 'Hora Volta (opcional)',
+                                  filled: true,
+                                  fillColor: Color.fromARGB(255, 205, 203, 203),
+                                  suffixIcon: Icon(Icons.timer),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 237, 144, 49))),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 237, 144, 49))),
+                                ),
+                                readOnly: true,
+                                onTap: () {
+                                  _selectTime(
+                                      2); //chama a função de selecionar hora quando clicado
+                                },
+                              ))),
+                    ]),
                 Padding(
                     //Botão de "Buscar" no fim da tela
                     padding: EdgeInsets.only(
@@ -182,11 +277,11 @@ class _HomeState extends State<Home> {
                             35), //valores precisam ser atualizados pra ficar em função da tela
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 5, 69, 82),
+                            backgroundColor: Color.fromARGB(255, 153, 77, 0),
                             foregroundColor: Color.fromARGB(255, 255, 255, 255),
-                            minimumSize: Size(15, 45),
+                            minimumSize: Size(150, 45),
                             textStyle: TextStyle(fontSize: 25)),
-                        child: Text("Buscar"),
+                        child: Text("Ofertar Carona"),
                         onPressed: () => ()))
               ],
             ),
@@ -335,7 +430,7 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: IconButton(
                   icon: Icon(Icons.home),
-                  onPressed: () => {Navigator.pushNamed(context, '/home')},
+                  onPressed: () => {Navigator.pushNamed(context, '/homeMoto')},
                 ), //
                 label: 'Home'),
             BottomNavigationBarItem(
@@ -385,7 +480,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<void> _selectTime() async {
+  Future<void> _selectTime(a) async {
     //função de seleção de hora
     TimeOfDay? _picked =
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
@@ -394,8 +489,11 @@ class _HomeState extends State<Home> {
       //quando é selecionado algo diferente de null, coloca o texto da hora no controller pra ir pro bloco de texto la em cima.
       setState(() {
         _hourSelect = _picked;
-        _hourController.text =
-            "${_hourSelect.hour}:${_hourSelect.minute}"; //a diferença aqui é que precisei pegar parcialmente, se não a formatação ficaria estranha. Mas nem se preocupa
+        if (a == 1) {
+          _hourController.text = "${_hourSelect.hour}:${_hourSelect.minute}";
+        } else {
+          _hourController2.text = "${_hourSelect.hour}:${_hourSelect.minute}";
+        } //a diferença aqui é que precisei pegar parcialmente, se não a formatação ficaria estranha. Mas nem se preocupa
       });
     }
   }
