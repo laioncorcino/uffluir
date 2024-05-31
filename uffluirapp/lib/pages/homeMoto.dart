@@ -5,6 +5,8 @@ import 'support.dart';
 import 'minhasCaronas.dart';
 import 'perfil.dart';
 import 'home.dart';
+import 'supportMoto.dart';
+import 'perfilMoto.dart';
 
 class HomeMoto extends StatefulWidget {
   const HomeMoto({super.key});
@@ -59,12 +61,7 @@ class _HomeMotoState extends State<HomeMoto> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                    //Botão de "Buscar" no fim da tela
-                    padding: EdgeInsets.only(
-                        top: 35,
-                        left: 50,
-                        right:
-                            50), //valores precisam ser atualizados pra ficar em função da tela
+                    padding: EdgeInsets.only(top: 35, left: 50, right: 50),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: BeveledRectangleBorder(),
@@ -436,7 +433,7 @@ class _HomeMotoState extends State<HomeMoto> {
             BottomNavigationBarItem(
               icon: IconButton(
                 icon: Icon(Icons.help),
-                onPressed: () => {Navigator.pushNamed(context, '/support')},
+                onPressed: () => {Navigator.pushNamed(context, '/supportMoto')},
               ), //Icone de Suporte
               label: 'Suporte',
 
@@ -453,7 +450,7 @@ class _HomeMotoState extends State<HomeMoto> {
             BottomNavigationBarItem(
               icon: IconButton(
                 icon: Icon(Icons.person),
-                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
+                onPressed: () => {Navigator.pushNamed(context, '/perfilMoto')},
               ), //Icone Perfil
               label: 'Perfil',
             )

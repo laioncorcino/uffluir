@@ -3,18 +3,19 @@ import 'dart:ui';
 import 'home.dart';
 import 'perfil.dart';
 import 'minhasCaronas.dart';
+import 'perfilMoto.dart';
 
-class Support extends StatefulWidget {
-  const Support({super.key});
+class SupportMoto extends StatefulWidget {
+  const SupportMoto({super.key});
 
   @override
-  State<Support> createState() => _SupportState();
+  State<SupportMoto> createState() => _SupportMotoState();
 }
 
 FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
 Size size = view.physicalSize;
 
-class _SupportState extends State<Support> {
+class _SupportMotoState extends State<SupportMoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,16 +34,16 @@ class _SupportState extends State<Support> {
                         )))),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/supportMoto');
+                Navigator.pushNamed(context, '/support');
               }, // Image tapped
               child: Image.asset(
-                'images/passageiro-icon.png',
+                'images/motorista-icon.png',
                 height: 40,
                 alignment: Alignment.centerRight,
               ),
             )
           ]),
-          backgroundColor: Color(0xFF054552),
+          backgroundColor: Color.fromARGB(255, 153, 77, 0),
         ), //fim da appbar
         body: ListView(),
         bottomNavigationBar: BottomNavigationBar(
@@ -55,17 +56,17 @@ class _SupportState extends State<Support> {
             BottomNavigationBarItem(
                 icon: IconButton(
                   icon: Icon(Icons.home),
-                  onPressed: () => {Navigator.pushNamed(context, '/home')},
+                  onPressed: () => {Navigator.pushNamed(context, '/homeMoto')},
                 ), //
                 label: 'Home'),
             BottomNavigationBarItem(
               icon: IconButton(
                 icon: Icon(Icons.help),
-                onPressed: () => {Navigator.pushNamed(context, '/support')},
+                onPressed: () => {Navigator.pushNamed(context, '/supportMoto')},
               ), //Icone de Suporte
               label: 'Suporte',
 
-              //activeIcon: Support()
+              //activeIcon: SupportMoto()
             ),
             BottomNavigationBarItem(
               icon: IconButton(
@@ -78,7 +79,7 @@ class _SupportState extends State<Support> {
             BottomNavigationBarItem(
               icon: IconButton(
                 icon: Icon(Icons.person),
-                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
+                onPressed: () => {Navigator.pushNamed(context, '/perfilMoto')},
               ), //Icone Perfil
               label: 'Perfil',
             )

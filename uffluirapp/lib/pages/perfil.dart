@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'support.dart';
 import 'home.dart';
 import 'minhasCaronas.dart';
+import 'perfilMoto.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -31,15 +32,48 @@ class _PerfilState extends State<Perfil> {
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontWeight: FontWeight.bold,
                         )))),
-            Image.asset(
-              'images/passageiro-icon.png',
-              height: 40,
-              alignment: Alignment.centerRight,
-            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/perfilMoto');
+              }, // Image tapped
+              child: Image.asset(
+                'images/passageiro-icon.png',
+                height: 40,
+                alignment: Alignment.centerRight,
+              ),
+            )
           ]),
           backgroundColor: Color(0xFF054552),
         ), //fim da appbar
-        body: ListView(),
+        body: Row(
+          children: [
+            Container(
+                padding: EdgeInsets.only(top: 30, left: 20),
+                child: Image.asset(
+                  'images/avatar.png',
+                  height: 75,
+                )),
+            Flexible(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 7, left: 15),
+                  width: 200,
+                  child: Text('Nome do Usuário',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 7, left: 15),
+                  width: 200,
+                  child: Text('Sei la', style: TextStyle(fontSize: 13)),
+                ),
+              ],
+            )),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
