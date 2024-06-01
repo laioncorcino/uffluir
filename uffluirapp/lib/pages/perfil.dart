@@ -45,33 +45,119 @@ class _PerfilState extends State<Perfil> {
           ]),
           backgroundColor: Color(0xFF054552),
         ), //fim da appbar
-        body: Row(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-                padding: EdgeInsets.only(top: 30, left: 20),
-                child: Image.asset(
-                  'images/avatar.png',
-                  height: 75,
-                )),
-            Flexible(
-                child: Column(
+                child: Flexible(
+                    child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 7, left: 15),
-                  width: 200,
-                  child: Text('Nome do Usuário',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 7, left: 15),
-                  width: 200,
-                  child: Text('Sei la', style: TextStyle(fontSize: 13)),
-                ),
+                    padding: EdgeInsets.only(top: 30, left: 40),
+                    child: Image.asset(
+                      'images/avatar.png',
+                      width: 90,
+                    )),
+                Flexible(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 35, left: 15),
+                      width: 200,
+                      height: 55,
+                      child: Text('Nome do Usuário',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 0, left: 15),
+                      width: 200,
+                      height: 20,
+                      child: Text('usuario@email.com',
+                          style: TextStyle(fontSize: 13)),
+                    ),
+                    Flexible(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 20,
+                          padding: EdgeInsets.only(top: 0, left: 12),
+                          child: Icon(Icons.star),
+                        ),
+                        Container(
+                          child: Icon(Icons.star),
+                        ),
+                        Container(
+                          child: Icon(Icons.star_half_outlined),
+                        ),
+                        Container(
+                          child: Icon(Icons.star_border),
+                        ),
+                        Container(
+                          child: Icon(Icons.star_border),
+                        ),
+                      ],
+                    ))
+                  ],
+                )),
               ],
-            )),
+            ))),
+            Container(
+              padding: EdgeInsets.only(top: 20, left: 0),
+              child: SizedBox(
+                width: 300,
+                height: 120,
+                child: Card(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(top: 8, left: 15),
+                            child: Text('Nome do Usuário',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 8, left: 15),
+                            child: Text(
+                              'oiiiiiii vc eh legau',
+                            ),
+                          ),
+                        ]),
+                    color: Color.fromARGB(255, 205, 207, 208)),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20, left: 0),
+              child: SizedBox(
+                width: 300,
+                height: 120,
+                child: Card(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(top: 8, left: 15),
+                            child: Text('Nome do Usuário',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 8, left: 15),
+                            child: Text(
+                              'oiiiiiii vc naum eh legau',
+                            ),
+                          ),
+                        ]),
+                    color: Color.fromARGB(255, 205, 207, 208)),
+              ),
+            ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
