@@ -1,5 +1,6 @@
 package br.uff.uffluir.model;
 
+import br.uff.uffluir.json.PassengerRequest;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,4 +23,9 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     private List<Ride> receiverRides = new ArrayList<>();
 
+    public Passenger(PassengerRequest passengerRequest) {
+        this.name = passengerRequest.getName();
+        this.email = passengerRequest.getEmail();
+        this.pass = passengerRequest.getPass();
+    }
 }
