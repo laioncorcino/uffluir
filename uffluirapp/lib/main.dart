@@ -20,7 +20,7 @@ void main() {
         "/perfilMoto": (context) => const PerfilMoto(),
         MinhasCaronas.routeName: (context) => MinhasCaronas(),
         Detalhes.routeName: (context) => Detalhes(),
-        //"/minhasCaronas": (context) => const MinhasCaronas(),
+        //"/minhasCaronas": (context) => const MinhasCaronas()
       },
       title: "Navegação",
       debugShowCheckedModeBanner: false,
