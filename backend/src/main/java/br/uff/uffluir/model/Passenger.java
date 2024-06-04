@@ -3,12 +3,14 @@ package br.uff.uffluir.model;
 import br.uff.uffluir.json.PassengerRequest;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Passenger {
 
     @Id
