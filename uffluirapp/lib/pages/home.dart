@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:ui';
 import 'screen_arguments.dart';
 import 'support.dart';
@@ -17,12 +18,48 @@ FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
 Size size = view.physicalSize;
 
 class _HomeState extends State<Home> {
-  //controllers pro selecionador de data e hora
+  // Controladores
   TextEditingController _dateController = TextEditingController();
   TimeOfDay _hourSelect = TimeOfDay
       .now(); //esse aqui é pra ele "começar" na hora atual, explico la embaixo
   TextEditingController _hourController = TextEditingController();
+  final TextEditingController _partidaController = TextEditingController();
+
+  // Lista de sugestões para as barras de pesquisa
+  List<String> partidaSuggestions = [
+    'GRG - TODOS',
+    'GRG - Cantareira',
+    'GRG - Ed. Física',
+    'PRV - Jambeiro',
+    'PRV - Orla',
+    'VAL - Ent. Principal',
+    'VAL - Rua do Perdeu'
+  ];
+  List<String> filteredPartidaSuggestions = [];
+
   @override
+  void initState() {
+    super.initState();
+    _partidaController.addListener(_onPartidaSearchChanged);
+    filteredPartidaSuggestions.addAll(partidaSuggestions);
+  }
+
+  @override
+  void dispose() {
+    _partidaController.dispose();
+    super.dispose();
+  }
+
+  void _onPartidaSearchChanged() {
+    setState(() {
+      filteredPartidaSuggestions = partidaSuggestions
+          .where((suggestion) => suggestion
+              .toLowerCase()
+              .contains(_partidaController.text.toLowerCase()))
+          .toList();
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -63,28 +100,91 @@ class _HomeState extends State<Home> {
                         left: 35,
                         right:
                             35), //valores precisam ser atualizados pra ficar em função da tela
-                    child: SearchBar(
-                      //aqui é a primeira SearchBar, a de local de partida
-                      textStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      leading: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.menu)), //icone da esquerda
-                      hintText: "Local de Partida",
-                      hintStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(165, 5, 69, 82)),
-                      trailing: [
-                        //icone da direita
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search),
-                        )
+                    child: Column(
+                      children: [
+                        TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: true,
+                            controller: _partidaController,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Local de Partida',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 20,
+                              ),
+                              filled: true,
+                              fillColor: Color.fromARGB(165, 5, 69, 82),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () {
+                                  // Implemente a ação desejada quando o ícone é pressionado
+                                },
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return partidaSuggestions
+                                .where((local) => local
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()))
+                                .toList();
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return Container(
+                              color: Colors.blue, // Cor de fundo azul
+                              child: ListTile(
+                                title: Text(
+                                  suggestion,
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            _partidaController.text = suggestion;
+                            print('Local selecionado: $suggestion');
+                          },
+                        ),
                       ],
-                    )),
+                    )
+                    /*SearchBar(
+                    //aqui é a primeira SearchBar, a de local de partida
+                    textStyle: MaterialStateProperty.all(TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: 20)),
+                    leading: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.menu)), //icone da esquerda
+                    controller: _partidaController,
+                    hintText: 'Local de Partida',
+                    hintStyle: MaterialStateProperty.all(TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: 20)),
+                    backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(165, 5, 69, 82)),
+                    trailing: [
+                      //icone da direita
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.search),
+                      )
+                    ],
+                  ),*/
+                    ),
                 Padding(
                     //imagem do mapa
                     padding: EdgeInsets.only(
