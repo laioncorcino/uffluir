@@ -39,10 +39,12 @@ class MinhasCaronas extends StatefulWidget {
   State<MinhasCaronas> createState() => _MinhasCaronasState();
 }
 
-FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
-Size size = view.physicalSize;
+//FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
+//Size size = view.physicalSize;
 
 // Essa classe deve ser populada pelas informações do banco de dados
+// Quando usar a API, vamos precisar de uma função async que retorne uma lista do tipo Future
+
 class _MinhasCaronasState extends State<MinhasCaronas> {
   final List<Carona> caronas = [
     Carona(
