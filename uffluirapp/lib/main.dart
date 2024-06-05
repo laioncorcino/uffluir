@@ -7,6 +7,7 @@ import 'pages/detalhes.dart';
 import 'pages/homeMoto.dart';
 import 'pages/supportMoto.dart';
 import 'pages/perfilMoto.dart';
+import 'pages/resultadosBusca.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -20,7 +21,7 @@ void main() {
         "/perfilMoto": (context) => const PerfilMoto(),
         MinhasCaronas.routeName: (context) => MinhasCaronas(),
         Detalhes.routeName: (context) => Detalhes(),
-        //"/minhasCaronas": (context) => const MinhasCaronas()
+        ResultadosBusca.routeName: (context) => ResultadosBusca()
       },
       title: "Navegação",
       debugShowCheckedModeBanner: false,
