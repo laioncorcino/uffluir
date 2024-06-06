@@ -279,11 +279,7 @@ class _HomeState extends State<Home> {
                     },
                   )),
               Padding(
-                padding: EdgeInsets.only(
-                  top: 20,
-                  left: 35,
-                  right: 35,
-                ),
+                padding: EdgeInsets.all(15),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 5, 69, 82),
