@@ -29,10 +29,10 @@ class NewSearchBar extends StatelessWidget {
               fillColor: Color.fromARGB(255, 205, 203, 203),
               suffixIcon: Icon(Icons.search),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 5, 69, 82)),
+                borderSide: BorderSide(color: Color(0xFF558190)),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 5, 69, 82)),
+                borderSide: BorderSide(color: Color(0xFF558190)),
               ),
             ),
           ),

@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
                               fontSize: 20,
                             ),
                             filled: true,
-                            fillColor: Color.fromARGB(165, 5, 69, 82),
+                            fillColor: Color(0xFF558190),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),
                               borderSide: BorderSide.none,
@@ -147,7 +147,7 @@ class _HomeState extends State<Home> {
                         },
                         itemBuilder: (context, suggestion) {
                           return Container(
-                            color: Colors.blue, // Cor de fundo azul
+                            color: Color(0xFF558190), // Cor de fundo azul
                             child: ListTile(
                               title: Text(
                                 suggestion,
@@ -454,45 +454,6 @@ class _HomeState extends State<Home> {
           ]),
         ]),*/
       bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
-      /*bottomNavigationBar: BottomNavigationBar(
-          //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          selectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          unselectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                  icon: Icon(Icons.home),
-                  onPressed: () => {Navigator.pushNamed(context, '/home')},
-                ), //
-                label: 'Home'),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.help),
-                onPressed: () => {Navigator.pushNamed(context, '/support')},
-              ), //Icone de Suporte
-              label: 'Suporte',
-
-              //activeIcon: Support()
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.time_to_leave),
-                onPressed: () =>
-                    {Navigator.pushNamed(context, '/minhasCaronas')},
-              ), //Icone de Carro no "Minhas Caronas"
-              label: 'Minhas Caronas',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
-              ), //Icone Perfil
-              label: 'Perfil',
-            )
-          ],
-        )*/
     );
   }
 

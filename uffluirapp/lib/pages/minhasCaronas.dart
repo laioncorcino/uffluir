@@ -3,12 +3,8 @@ import 'dart:ui';
 import 'customBottonNavigationBar.dart';
 import 'detalhes.dart';
 import 'screen_arguments.dart';
-import 'support.dart';
-import 'home.dart';
-import 'perfil.dart';
 
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 // Esta classe é apenas um representação do que será exibido para o usuário
 class Carona {
@@ -113,7 +109,7 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
               children: [
                 Container(
                   width: double.infinity,
-                  color: Colors.green,
+                  color: Color(0xFF054552),
                   padding: EdgeInsets.all(8),
                   child: Text(
                     carona.confirmada,
@@ -124,22 +120,46 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
                   ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.directions_car, color: Colors.blue),
-                  title: Text(
-                    'Origem: ${carona.origem} - Destino: ${carona.destino}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  leading: Icon(Icons.directions_car, color: Color(0xFF2D6371)),
+                  title: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.center, // Centralize os textos
                     children: [
-                      Text('Data: ${carona.data}'),
-                      Text('Função: ${carona.funcao}'),
+                      Text(
+                        carona.origem,
+                        style: TextStyle(
+                          color: Color(0xFF2D6371),
+                        ),
+                      ),
+                      Text(
+                        carona.data,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        carona.destino,
+                        style: TextStyle(
+                          color: Color(0xFF2D6371),
+                        ),
+                      ),
+                      Text(
+                        carona.funcao,
+                        style: TextStyle(
+                          color: Color(0xFF2D6371),
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ],
                   ),
                   onTap: () {
                     // Ação ao clicar no item
-                    Navigator.pushNamed(context, Detalhes.routeName,
-                        arguments: ScreenArguments(carona.id));
+                    Navigator.pushNamed(
+                      context,
+                      Detalhes.routeName,
+                      arguments: ScreenArguments(carona.id),
+                    );
                   },
                 ),
               ],
@@ -147,43 +167,6 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
           );
         },
       ),
-      /*bottomNavigationBar: BottomNavigationBar(
-          //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          selectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          unselectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                  icon: Icon(Icons.home),
-                  onPressed: () => {Navigator.pushNamed(context, '/home')},
-                ),
-                label: 'Home'),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.help),
-                onPressed: () => {Navigator.pushNamed(context, '/support')},
-              ),
-              label: 'Suporte',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.time_to_leave),
-                onPressed: () =>
-                    {Navigator.pushNamed(context, '/minhasCaronas')},
-              ),
-              label: 'Minhas Caronas',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
-              ),
-              label: 'Perfil',
-            )
-          ],
-        )*/
       bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
     );
   }

@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'screen_arguments.dart';
-import 'support.dart';
-import 'minhasCaronas.dart';
-import 'perfil.dart';
-import 'home.dart';
-import 'supportMoto.dart';
-import 'perfilMoto.dart';
 
 class HomeMoto extends StatefulWidget {
   String message = "";

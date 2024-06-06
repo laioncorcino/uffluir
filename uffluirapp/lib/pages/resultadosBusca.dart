@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:uffluir/pages/search_arguments.dart';
 
 import 'customBottonNavigationBar.dart';
-import 'minhasCaronas.dart';
 
 class Resultado {
   final int id; // Representa a chave primária do banco de dados
@@ -140,43 +139,6 @@ class _ResultadosBuscaState extends State<ResultadosBusca> {
         },
       ),
       bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
-      /*bottomNavigationBar: BottomNavigationBar(
-          //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          selectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          unselectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                  icon: Icon(Icons.home),
-                  onPressed: () => {Navigator.pushNamed(context, '/home')},
-                ),
-                label: 'Home'),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.help),
-                onPressed: () => {Navigator.pushNamed(context, '/support')},
-              ),
-              label: 'Suporte',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.time_to_leave),
-                onPressed: () =>
-                    {Navigator.pushNamed(context, MinhasCaronas.routeName)},
-              ),
-              label: 'Minhas Caronas',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
-              ),
-              label: 'Perfil',
-            )
-          ],
-        )*/
     );
   }
 }
