@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk AS build
+FROM debian:buster-slim AS build
 
 # Instalação do Gradle
 RUN apt-get update && \
