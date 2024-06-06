@@ -15,6 +15,8 @@ public class RideResponse {
     private String arrivalPlace;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
+    private String status;
+    private Integer size;
     private DriverResponse driver;
     private List<PassengerResponse> passengers;
 
@@ -26,6 +28,8 @@ public class RideResponse {
         this.departureTime = ride.getDepartureTime();
         this.arrivalTime = ride.getArrivalTime();
         this.driver = new DriverResponse(ride.getDriver());
+        this.status = ride.getStatus();
+        this.size = ride.getSize();
         this.passengers = ride.getPassengers().stream().map(PassengerResponse::new).toList();
     }
 

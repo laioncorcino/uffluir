@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -56,13 +57,50 @@ public class RideService {
 
     public Ride acceptRide(AcceptRequest acceptRequest, Long rideId) {
         Passenger passenger = passengerRepository.findByEmail(acceptRequest.getPassengerEmail());
+
+        if (passenger == null) {
+            throw new NotFoundException("Passenger not found");
+        }
+
+        Ride ride = getById(rideId);
+        if (ride.getStatus().equals("CLOSED")) {
+            throw new BadRequestException("Ride already closed");
+        }
+
+        if (ride.getPassengers().size() == ride.getSize() - 1) {
+            ride.setStatus("CLOSED");
+        }
+
+        ride.getPassengers().add(passenger);
+        return rideRepository.save(ride);
+    }
+
+    public void concludedRide(Long rideId, String driverEmail) {
         Ride ride = getById(rideId);
 
-        ArrayList<Passenger> passengers = new ArrayList<>();
-        passengers.add(passenger);
+        Driver driver = driverRepository.findByEmail(driverEmail);
 
-        ride.setPassengers(passengers);
-        return rideRepository.save(ride);
+        if (driver == null || !Objects.equals(ride.getDriver().getEmail(), driverEmail)) {
+            throw new NotFoundException("Driver not found");
+        }
+
+        ride.setStatus("CONCLUDED");
+        rideRepository.save(ride);
+    }
+
+    public void deleteRide(Long rideId, String driverEmail) {
+        Ride ride = getById(rideId);
+        Driver driver = driverRepository.findByEmail(driverEmail);
+
+        if (driver == null) {
+            throw new NotFoundException("Driver not found");
+        }
+
+        if (!ride.getDriver().getEmail().equals(driver.getEmail())) {
+            throw new BadRequestException("Driver does not belong to this ride");
+        }
+
+        rideRepository.delete(ride);
     }
 
     private Ride getById(Long rideId) {

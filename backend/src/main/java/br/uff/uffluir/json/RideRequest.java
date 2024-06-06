@@ -10,5 +10,6 @@ public class RideRequest {
     private String arrivalPlace;
     private String departureTime;
     private String arrivalTime;
+    private Integer size;
 
 }

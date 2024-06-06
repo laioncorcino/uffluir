@@ -1,8 +1,6 @@
 package br.uff.uffluir.controller;
 
-import br.uff.uffluir.json.AcceptRequest;
-import br.uff.uffluir.json.RideRequest;
-import br.uff.uffluir.json.RideResponse;
+import br.uff.uffluir.json.*;
 import br.uff.uffluir.model.Ride;
 import br.uff.uffluir.service.RideService;
 import jakarta.validation.Valid;
@@ -13,7 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @RestController
 @RequestMapping("/api/v1/rides")
@@ -33,7 +31,7 @@ public class RideController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<RideResponse>> list(@PageableDefault(sort = "rideId", direction = ASC) Pageable pageable) {
+    public ResponseEntity<Page<RideResponse>> list(@PageableDefault(sort = "rideId", direction = DESC) Pageable pageable) {
         return ResponseEntity.ok(rideService.getAllRides(pageable).map(RideResponse::new));
     }
 
@@ -41,6 +39,18 @@ public class RideController {
     public ResponseEntity<RideResponse> accept(@RequestBody AcceptRequest acceptRequest, @PathVariable Long rideId) {
         Ride ride = rideService.acceptRide(acceptRequest, rideId);
         return ResponseEntity.ok(new RideResponse(ride));
+    }
+
+    @PutMapping("/concluded/{rideId}")
+    public ResponseEntity<RideResponse> accept(@RequestBody ConcludedRequest concludedRequest, @PathVariable Long rideId) {
+        rideService.concludedRide(rideId, concludedRequest.getDriverEmail());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{rideId}")
+    public ResponseEntity<Void> delete(@PathVariable Long rideId, @RequestBody DeleteRequest deleteRequest) {
+        rideService.deleteRide(rideId, deleteRequest.getDriverEmail());
+        return ResponseEntity.noContent().build();
     }
 
 }

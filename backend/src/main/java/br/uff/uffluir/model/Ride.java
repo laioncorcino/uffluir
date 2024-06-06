@@ -35,6 +35,9 @@ public class Ride {
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
+    private String status;
+    private Integer size;
+
     @ManyToOne
     @JoinColumn(name = "driver_id", nullable = false)
     private Driver driver;
@@ -54,6 +57,8 @@ public class Ride {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.departureTime = LocalDateTime.parse(rideRequest.getDepartureTime(), formatter);
         this.arrivalTime = LocalDateTime.parse(rideRequest.getArrivalTime(), formatter);
+        this.status = "OPEN";
+        this.size = rideRequest.getSize();
         this.driver = driver;
     }
 
