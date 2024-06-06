@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'customBottonNavigationBar.dart';
 import 'screen_arguments.dart';
 
 FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
@@ -48,32 +49,33 @@ class Detalhes extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false, // Remove o botão de voltar no topo
-          //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
-          title: Row(children: [
-            Expanded(
-                child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text("Buscar",
-                        style: const TextStyle(
-                          fontSize: 30.0,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontWeight: FontWeight.bold,
-                        )))),
-            Image.asset(
-              'images/passageiro-icon.png',
-              height: 40,
-              alignment: Alignment.centerRight,
-            ),
-          ]),
-          backgroundColor: Color(0xFF054552),
-        ),
-        body: ListView(
-          padding: EdgeInsets.all(16),
-          children: _buildDetalhesCards(args.id),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Remove o botão de voltar no topo
+        //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
+        title: Row(children: [
+          Expanded(
+              child: Container(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text("Buscar",
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.bold,
+                      )))),
+          Image.asset(
+            'images/passageiro-icon.png',
+            height: 40,
+            alignment: Alignment.centerRight,
+          ),
+        ]),
+        backgroundColor: Color(0xFF054552),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: _buildDetalhesCards(args.id),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
+      /*bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -109,7 +111,8 @@ class Detalhes extends StatelessWidget {
               label: 'Perfil',
             )
           ],
-        ));
+        )*/
+    );
   }
 
   List<Widget> _buildDetalhesCards(int id) {

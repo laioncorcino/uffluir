@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'customBottonNavigationBar.dart';
 import 'detalhes.dart';
 import 'screen_arguments.dart';
 import 'support.dart';
@@ -80,73 +81,73 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false, // Remove o botão de voltar no topo
-          //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
-          title: Row(children: [
-            Expanded(
-                child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text("Minhas Caronas",
-                        style: const TextStyle(
-                          fontSize: 30.0,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontWeight: FontWeight.bold,
-                        )))),
-            Image.asset(
-              'images/passageiro-icon.png',
-              height: 40,
-              alignment: Alignment.centerRight,
-            ),
-          ]),
-          backgroundColor: Color(0xFF054552),
-        ),
-        body: ListView.builder(
-          itemCount: caronas.length,
-          itemBuilder: (context, index) {
-            final carona = caronas[index];
-            return Card(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    color: Colors.green,
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      carona.confirmada,
-                      style: TextStyle(
-                        color: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Remove o botão de voltar no topo
+        //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
+        title: Row(children: [
+          Expanded(
+              child: Container(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text("Minhas Caronas",
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontWeight: FontWeight.bold,
-                      ),
+                      )))),
+          Image.asset(
+            'images/passageiro-icon.png',
+            height: 40,
+            alignment: Alignment.centerRight,
+          ),
+        ]),
+        backgroundColor: Color(0xFF054552),
+      ),
+      body: ListView.builder(
+        itemCount: caronas.length,
+        itemBuilder: (context, index) {
+          final carona = caronas[index];
+          return Card(
+            margin: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Colors.green,
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    carona.confirmada,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.directions_car, color: Colors.blue),
-                    title: Text(
-                      'Origem: ${carona.origem} - Destino: ${carona.destino}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Data: ${carona.data}'),
-                        Text('Função: ${carona.funcao}'),
-                      ],
-                    ),
-                    onTap: () {
-                      // Ação ao clicar no item
-                      Navigator.pushNamed(context, Detalhes.routeName,
-                          arguments: ScreenArguments(carona.id));
-                    },
+                ),
+                ListTile(
+                  leading: Icon(Icons.directions_car, color: Colors.blue),
+                  title: Text(
+                    'Origem: ${carona.origem} - Destino: ${carona.destino}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ],
-              ),
-            );
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Data: ${carona.data}'),
+                      Text('Função: ${carona.funcao}'),
+                    ],
+                  ),
+                  onTap: () {
+                    // Ação ao clicar no item
+                    Navigator.pushNamed(context, Detalhes.routeName,
+                        arguments: ScreenArguments(carona.id));
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      /*bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -182,6 +183,8 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
               label: 'Perfil',
             )
           ],
-        ));
+        )*/
+      bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
+    );
   }
 }

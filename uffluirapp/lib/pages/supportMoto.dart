@@ -6,7 +6,9 @@ import 'minhasCaronas.dart';
 import 'perfilMoto.dart';
 
 class SupportMoto extends StatefulWidget {
-  const SupportMoto({super.key});
+  String message = "";
+  static const String routeName = "/supportMoto";
+  SupportMoto();
 
   @override
   State<SupportMoto> createState() => _SupportMotoState();

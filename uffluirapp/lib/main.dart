@@ -13,12 +13,12 @@ void main() {
   runApp(MaterialApp(
       initialRoute: "/",
       routes: {
-        "/home": (context) => const Home(),
-        "/homeMoto": (context) => const HomeMoto(),
-        "/support": (context) => const Support(),
-        "/supportMoto": (context) => const SupportMoto(),
-        "/perfil": (context) => const Perfil(),
-        "/perfilMoto": (context) => const PerfilMoto(),
+        Home.routeName: (context) => Home(),
+        HomeMoto.routeName: (context) => HomeMoto(),
+        Support.routeName: (context) => Support(),
+        SupportMoto.routeName: (context) => SupportMoto(),
+        Perfil.routeName: (context) => Perfil(),
+        PerfilMoto.routeName: (context) => PerfilMoto(),
         MinhasCaronas.routeName: (context) => MinhasCaronas(),
         Detalhes.routeName: (context) => Detalhes(),
         ResultadosBusca.routeName: (context) => ResultadosBusca()

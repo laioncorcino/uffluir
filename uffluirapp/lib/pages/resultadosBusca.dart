@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uffluir/pages/search_arguments.dart';
 
+import 'customBottonNavigationBar.dart';
+import 'minhasCaronas.dart';
+
 class Resultado {
   final int id; // Representa a chave primária do banco de dados
   final String motorista;
@@ -78,65 +81,66 @@ class _ResultadosBuscaState extends State<ResultadosBusca> {
     final List<Resultado> resultados =
         getResultados(args.origem, args.destino, args.data);
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false, // Remove o botão de voltar no topo
-          //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
-          title: Row(children: [
-            Expanded(
-                child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text("Resultados da Busca",
-                        style: const TextStyle(
-                          fontSize: 30.0,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontWeight: FontWeight.bold,
-                        )))),
-          ]),
-          backgroundColor: Color(0xFF054552),
-        ),
-        body: ListView.builder(
-          itemCount: resultados.length,
-          itemBuilder: (context, index) {
-            final resultado = resultados[index];
-            return Card(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    color: Colors.green,
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      resultado.motorista,
-                      style: TextStyle(
-                        color: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Remove o botão de voltar no topo
+        //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
+        title: Row(children: [
+          Expanded(
+              child: Container(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text("Resultados da Busca",
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontWeight: FontWeight.bold,
-                      ),
+                      )))),
+        ]),
+        backgroundColor: Color(0xFF054552),
+      ),
+      body: ListView.builder(
+        itemCount: resultados.length,
+        itemBuilder: (context, index) {
+          final resultado = resultados[index];
+          return Card(
+            margin: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Colors.green,
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    resultado.motorista,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.directions_car, color: Colors.blue),
-                    title: Text(
-                      'Origem: ${resultado.origem} - Destino: ${resultado.destino}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Data: ${resultado.data}'),
-                      ],
-                    ),
-                    onTap: () {
-                      // Ação ao clicar no item
-                    },
+                ),
+                ListTile(
+                  leading: Icon(Icons.directions_car, color: Colors.blue),
+                  title: Text(
+                    'Origem: ${resultado.origem} - Destino: ${resultado.destino}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ],
-              ),
-            );
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Data: ${resultado.data}'),
+                    ],
+                  ),
+                  onTap: () {
+                    // Ação ao clicar no item
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
+      /*bottomNavigationBar: BottomNavigationBar(
           //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -160,7 +164,7 @@ class _ResultadosBuscaState extends State<ResultadosBusca> {
               icon: IconButton(
                 icon: Icon(Icons.time_to_leave),
                 onPressed: () =>
-                    {Navigator.pushNamed(context, '/minhasCaronas')},
+                    {Navigator.pushNamed(context, MinhasCaronas.routeName)},
               ),
               label: 'Minhas Caronas',
             ),
@@ -172,6 +176,7 @@ class _ResultadosBuscaState extends State<ResultadosBusca> {
               label: 'Perfil',
             )
           ],
-        ));
+        )*/
+    );
   }
 }
