@@ -1,4 +1,4 @@
-FROM debian:buster-slim AS build
+FROM openjdk:17-jdk-slim AS build
 
 # Instalação do Gradle
 RUN apt-get update && \
@@ -15,9 +15,6 @@ COPY . .
 RUN /opt/gradle-7.4/bin/gradle clean build
 
 FROM openjdk:17-jdk-slim
-
-# Define a variável de ambiente JAVA_HOME
-ENV JAVA_HOME=/usr/local/openjdk-17
 
 EXPOSE 8080
 
