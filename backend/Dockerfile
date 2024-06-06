@@ -1,19 +1,18 @@
 FROM openjdk:17-jdk AS build
 
+# Instalação do Gradle
 RUN apt-get update && \
     apt-get install -y wget unzip && \
-    wget -q https://services.gradle.org/distributions/gradle-7.4-bin.zip && \
-    unzip -d /opt gradle-7.4-bin.zip && \
-    rm gradle-7.4-bin.zip
-
-ENV GRADLE_HOME=/opt/gradle-7.4
-ENV PATH=$PATH:/opt/gradle-7.4/bin
+    wget -q -P /tmp https://services.gradle.org/distributions/gradle-7.4-bin.zip && \
+    unzip -d /opt /tmp/gradle-7.4-bin.zip && \
+    rm /tmp/gradle-7.4-bin.zip
 
 WORKDIR /app
 
 COPY . .
 
-RUN ./gradlew clean build
+# Uso do Gradle Wrapper
+RUN /opt/gradle-7.4/bin/gradle clean build
 
 FROM openjdk:17-jdk-slim
 
