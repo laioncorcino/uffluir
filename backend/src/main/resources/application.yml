@@ -3,9 +3,9 @@ spring:
     name: uffluir
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost/uffluir
-    username: root
-    password: root
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
