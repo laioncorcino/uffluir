@@ -16,6 +16,9 @@ RUN /opt/gradle-7.4/bin/gradle clean build
 
 FROM openjdk:17-jdk-slim
 
+# Define a variável de ambiente JAVA_HOME
+ENV JAVA_HOME=/usr/local/openjdk-17
+
 EXPOSE 8080
 
 COPY --from=build /app/build/libs/*.jar /app/app.jar
