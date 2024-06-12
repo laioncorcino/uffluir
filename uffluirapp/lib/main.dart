@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           PerfilMoto.routeName: (context) => PerfilMoto(),
           MinhasCaronas.routeName: (context) => MinhasCaronas(),
           Detalhes.routeName: (context) => Detalhes(),
-          ResultadosBusca.routeName: (context) => ResultadosBusca()
+          //ResultadosBusca.routeName: (context) => ResultadosBusca()
         },
         title: "Navegação",
         debugShowCheckedModeBanner: false,

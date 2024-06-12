@@ -8,7 +8,9 @@ import 'homeMoto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  String message = "";
+  static const String routeName = "/home";
+  Home();
 
   @override
   State<Home> createState() => _HomeState();

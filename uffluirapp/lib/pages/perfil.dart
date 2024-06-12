@@ -6,7 +6,9 @@ import 'minhasCaronas.dart';
 import 'perfilMoto.dart';
 
 class Perfil extends StatefulWidget {
-  const Perfil({super.key});
+  String message = "";
+  static const String routeName = "/perfil";
+  Perfil();
 
   @override
   State<Perfil> createState() => _PerfilState();

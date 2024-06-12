@@ -7,7 +7,9 @@ import 'supportMoto.dart';
 import 'homeMoto.dart';
 
 class PerfilMoto extends StatefulWidget {
-  const PerfilMoto({super.key});
+  String message = "";
+  static const String routeName = "/perfilMoto";
+  PerfilMoto();
 
   @override
   State<PerfilMoto> createState() => _PerfilMotoState();
