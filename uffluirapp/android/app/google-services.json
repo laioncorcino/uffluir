@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "26869223573",
+    "project_id": "uffluir-8968e",
+    "storage_bucket": "uffluir-8968e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26869223573:android:4a1af23b38bbd2f6138b9c",
+        "android_client_info": {
+          "package_name": "com.example.uffluir"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMgnys4CnzvYhn7QFOD9M0y2MuPMc-dSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

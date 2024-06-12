@@ -5,6 +5,7 @@ import 'support.dart';
 import 'minhasCaronas.dart';
 import 'perfil.dart';
 import 'homeMoto.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -187,7 +188,7 @@ class _HomeState extends State<Home> {
                             minimumSize: Size(15, 45),
                             textStyle: TextStyle(fontSize: 25)),
                         child: Text("Buscar"),
-                        onPressed: () => ()))
+                        onPressed: () => {}))
               ],
             ),
           ),
