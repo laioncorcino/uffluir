@@ -283,42 +283,36 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: EdgeInsets.all(15),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 5, 69, 82),
-                    foregroundColor: Color.fromARGB(255, 255, 255, 255),
-                    minimumSize: Size(15, 45),
-                    textStyle: TextStyle(fontSize: 25),
-                  ),
-                  child: Text("Buscar"),
-                  onPressed: () {
-                    FirebaseFirestore.instance
-                        .collection('user')
-                        .doc('YAOEiPFGf1dLiN3kXkob')
-                        .set({'name': 'porfavorfunciona'});
-                  } /*{
-                    String origem = _partidaController.text;
-                    String destino = "GRG - TODOS"; // Seu destino fixo
-                    String data = _dateController.text;
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 5, 69, 82),
+                      foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                      minimumSize: Size(15, 45),
+                      textStyle: TextStyle(fontSize: 25),
+                    ),
+                    child: Text("Buscar"),
+                    onPressed: () {
+                      String origem = _partidaController.text;
+                      String destino = "GRG - TODOS"; // Seu destino fixo
+                      String data = _dateController.text;
 
-                    if (origem.isNotEmpty && data.isNotEmpty) {
-                      // Se ambos os campos não estiverem vazios, navegue para a próxima tela
-                      Navigator.pushNamed(
-                        context,
-                        ResultadosBusca.routeName,
-                        arguments: SearchArguments(origem, destino, data),
-                      );
-                      print('Origem $origem Data: $data');
-                    } else {
-                      // Caso contrário, exiba uma mensagem ao usuário
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Por favor, preencha todos os campos."),
-                        ),
-                      );
-                    }
-                  }*/
-                  ,
-                ),
+                      if (origem.isNotEmpty && data.isNotEmpty) {
+                        // Se ambos os campos não estiverem vazios, navegue para a próxima tela
+                        Navigator.pushNamed(
+                          context,
+                          ResultadosBusca.routeName,
+                          arguments: SearchArguments(origem, destino, data),
+                        );
+                        print('Origem $origem Data: $data');
+                      } else {
+                        // Caso contrário, exiba uma mensagem ao usuário
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text("Por favor, preencha todos os campos."),
+                          ),
+                        );
+                      }
+                    }),
               )
             ],
           ),
