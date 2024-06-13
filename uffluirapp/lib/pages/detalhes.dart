@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
+import 'customBottonNavigationBar.dart';
 import 'screen_arguments.dart';
-
-FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
-Size size = view.physicalSize;
 
 class DetalhesCarona {
   final int id;
@@ -12,6 +9,8 @@ class DetalhesCarona {
   final String origem;
   final String destino;
   final String data;
+  final String status;
+  final int vagas;
 
   DetalhesCarona({
     required this.id,
@@ -20,6 +19,8 @@ class DetalhesCarona {
     required this.origem,
     required this.destino,
     required this.data,
+    required this.status,
+    required this.vagas,
   });
 }
 
@@ -33,99 +34,34 @@ class Detalhes extends StatelessWidget {
         id_passageiros: [8, 27, 53],
         origem: "Largo do Machado",
         destino: "Gragoatá",
-        data: "20/05/2024 - 08:00"),
+        data: "20/05/2024 - 08:00",
+        status: "Confirmada",
+        vagas: 0),
     DetalhesCarona(
         id: 2,
         id_motorista: 8,
         id_passageiros: [49, 62, 91],
         origem: "Largo do Machado",
         destino: "Gragoatá",
-        data: "18/05/2024 - 08:00")
+        data: "18/05/2024 - 08:00",
+        status: "Disponível",
+        vagas: 2)
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false, // Remove o botão de voltar no topo
-          //appbar, a faixa azul em cima. Essa parte você pode colar em outras telas e só mudar o "Buscar" pelo título da tela
-          title: Row(children: [
-            Expanded(
-                child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text("Buscar",
-                        style: const TextStyle(
-                          fontSize: 30.0,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontWeight: FontWeight.bold,
-                        )))),
-            Image.asset(
-              'images/passageiro-icon.png',
-              height: 40,
-              alignment: Alignment.centerRight,
-            ),
-          ]),
-          backgroundColor: Color(0xFF054552),
-        ),
-        body: ListView(
-          padding: EdgeInsets.all(16),
-          children: _buildDetalhesCards(args.id),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          //tela fixa do final da tela, é a mesma coisa da appbar só que no final. Pode colar em outras telas igualzinho
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          selectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          unselectedItemColor: Color.fromARGB(255, 54, 54, 54),
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                  icon: Icon(Icons.home),
-                  onPressed: () => {Navigator.pushNamed(context, '/home')},
-                ),
-                label: 'Home'),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.help),
-                onPressed: () => {Navigator.pushNamed(context, '/support')},
-              ),
-              label: 'Suporte',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.time_to_leave),
-                onPressed: () =>
-                    {Navigator.pushNamed(context, '/minhasCaronas')},
-              ),
-              label: 'Minhas Caronas',
-            ),
-            BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () => {Navigator.pushNamed(context, '/perfil')},
-              ),
-              label: 'Perfil',
-            )
-          ],
-        ));
-  }
-
-  List<Widget> _buildDetalhesCards(int id) {
-    final detalhesCarona = _getDetalhesCarona(id);
-    final List<Widget> cards = [];
-
-    cards.add(_buildDetalhesCard("ID", detalhesCarona.id.toString()));
-    cards.add(_buildDetalhesCard(
-        "Motorista", detalhesCarona.id_motorista.toString()));
-    cards.add(_buildDetalhesCard(
-        "Passageiros", detalhesCarona.id_passageiros.join(", ")));
-    cards.add(_buildDetalhesCard("Origem", detalhesCarona.origem));
-    cards.add(_buildDetalhesCard("Destino", detalhesCarona.destino));
-    cards.add(_buildDetalhesCard("Data", detalhesCarona.data));
-
-    return cards;
+  DetalhesCarona _getDetalhesCarona(int id) {
+    for (int i = 0; i < caronas.length; i++) {
+      if (caronas[i].id == id) return caronas[i];
+    }
+    // Retorna uma carona padrão caso o ID não seja encontrado
+    return DetalhesCarona(
+        id: 1,
+        id_motorista: 13,
+        id_passageiros: [8, 27, 53],
+        origem: "Largo do Machado",
+        destino: "Gragoatá",
+        data: "20/05/2024 - 08:00",
+        status: "Aguardando confirmação",
+        vagas: 0);
   }
 
   Widget _buildDetalhesCard(String title, String content) {
@@ -158,19 +94,131 @@ class Detalhes extends StatelessWidget {
     );
   }
 
-  DetalhesCarona _getDetalhesCarona(int id) {
-    // Aqui você retornaria a carona correspondente ao ID passado
-    // Este é apenas um exemplo estático, você deve implementar a lógica real aqui
-    for (int i = 0; i < caronas.length; i++) {
-      if (caronas[i].id == id) return caronas[i];
+  List<Widget> _buildDetalhesCards(DetalhesCarona carona) {
+    final List<Widget> cards = [];
+    carona.id_passageiros.forEach((id) {
+      cards.add(_buildDetalhesCard("ID do passageiro", id.toString()));
+    });
+    return cards;
+  }
+
+  String bottomText(String status) {
+    switch (status) {
+      case "Confirmada":
+        return "Cancelar corrida";
+      case "Aguardando confirmação":
+        return "Cancelar solicitação";
+      case "Finalizada":
+        return "Avaliar corrida";
+      case "Disponível":
+        return "Solicitar corrida";
     }
-    return DetalhesCarona(
-      id: 1,
-      id_motorista: 13,
-      id_passageiros: [8, 27, 53],
-      origem: "Largo do Machado",
-      destino: "Gragoatá",
-      data: "20/05/2024 - 08:00",
+    return "Buscar nova corrida";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments?;
+    if (args == null) {
+      // Handle the case when arguments are null
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Detalhes"),
+        ),
+        body: Center(
+          child: Text("Nenhuma carona selecionada."),
+        ),
+      );
+    }
+
+    final DetalhesCarona carona = _getDetalhesCarona(args.id);
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Remove o botão de voltar no topo
+        title: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 8),
+                child: Text(
+                  "Detalhes",
+                  style: const TextStyle(
+                    fontSize: 30.0,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Image.asset(
+              'images/passageiro-icon.png',
+              height: 40,
+              alignment: Alignment.centerRight,
+            ),
+          ],
+        ),
+        backgroundColor: Color(0xFF054552),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Partida: ${carona.origem}\nDestino: ${carona.destino}\nData: ${carona.data}\nNúmero de vagas: ${carona.vagas}',
+                style: TextStyle(
+                  color: Color(0xFF49454F), // Custom color for the text
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildDetalhesCard(
+                          "ID do motorista", carona.id_motorista.toString())
+                    ])),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'Veículo: Corolla 2022 - Toyota\nPlaca AAA-AAAA\nCor: Preto',
+                style: TextStyle(
+                  color: Color(0xFF49454F), // Custom color for the text
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch, // Ajuste aqui
+                children: _buildDetalhesCards(carona),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 5, 69, 82),
+                    foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                    minimumSize: Size(15, 45),
+                    textStyle: TextStyle(fontSize: 25),
+                  ),
+                  child: Text(bottomText(carona.status)),
+                  onPressed: () {
+                    print('Botão de detalhes pressionado');
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
     );
   }
 }

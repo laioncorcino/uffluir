@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'uffluir-8968e.appspot.com',
     measurementId: 'G-M9J78HFWB3',
   );
+
 }

@@ -1,5 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:uffluir/firebase_options.dart';
 import 'pages/home.dart';
 import 'pages/support.dart';
 import 'pages/perfil.dart';
@@ -9,7 +9,7 @@ import 'pages/homeMoto.dart';
 import 'pages/supportMoto.dart';
 import 'pages/perfilMoto.dart';
 import 'pages/resultadosBusca.dart';
-import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
