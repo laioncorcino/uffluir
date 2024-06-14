@@ -12,7 +12,20 @@
           "package_name": "com.example.uffluir"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "26869223573-5pv9e4obotlc0doaj9epg93no4gau5of.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uffluir",
+            "certificate_hash": "45c9580afb50948419fb8a143f6c0d231fcdeb11"
+          }
+        },
+        {
+          "client_id": "26869223573-9of9if7e96sr39jtssjo9673h928dpir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBMgnys4CnzvYhn7QFOD9M0y2MuPMc-dSo"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26869223573-9of9if7e96sr39jtssjo9673h928dpir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "26869223573-7praq6cf69i0tgpa15rid8t7kjb65b0e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uffluir"
+              }
+            }
+          ]
         }
       }
     }

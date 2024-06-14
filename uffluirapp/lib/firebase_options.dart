@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '26869223573',
     projectId: 'uffluir-8968e',
     storageBucket: 'uffluir-8968e.appspot.com',
+    androidClientId: '26869223573-5pv9e4obotlc0doaj9epg93no4gau5of.apps.googleusercontent.com',
+    iosClientId: '26869223573-7praq6cf69i0tgpa15rid8t7kjb65b0e.apps.googleusercontent.com',
     iosBundleId: 'com.example.uffluir',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '26869223573',
     projectId: 'uffluir-8968e',
     storageBucket: 'uffluir-8968e.appspot.com',
+    androidClientId: '26869223573-5pv9e4obotlc0doaj9epg93no4gau5of.apps.googleusercontent.com',
+    iosClientId: '26869223573-7praq6cf69i0tgpa15rid8t7kjb65b0e.apps.googleusercontent.com',
     iosBundleId: 'com.example.uffluir',
   );
 

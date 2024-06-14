@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:uffluir/models/user.dart';
 import 'package:uffluir/pages/search_arguments.dart';
 import 'dart:ui';
 import 'customBottonNavigationBar.dart';
@@ -13,9 +14,9 @@ import 'homeMoto.dart';
 import 'resultadosBusca.dart';
 
 class Home extends StatefulWidget {
-  String message = "";
   static const String routeName = "/home";
-  Home();
+  final UserModel userModel;
+  Home({required this.userModel});
 
   @override
   State<Home> createState() => _HomeState();
