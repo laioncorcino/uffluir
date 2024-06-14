@@ -31,6 +31,7 @@ class _HomeState extends State<Home> {
       .now(); //esse aqui é pra ele "começar" na hora atual, explico la embaixo
   TextEditingController _hourController = TextEditingController();
   final TextEditingController _partidaController = TextEditingController();
+  final TextEditingController _destinoController = TextEditingController();
 
   // Lista de sugestões para as barras de pesquisa
   List<String> partidaSuggestions = [
@@ -167,31 +168,7 @@ class _HomeState extends State<Home> {
                         },
                       ),
                     ],
-                  )
-                  /*SearchBar(
-                    //aqui é a primeira SearchBar, a de local de partida
-                    textStyle: MaterialStateProperty.all(TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20)),
-                    leading: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.menu)), //icone da esquerda
-                    controller: _partidaController,
-                    hintText: 'Local de Partida',
-                    hintStyle: MaterialStateProperty.all(TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20)),
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(165, 5, 69, 82)),
-                    trailing: [
-                      //icone da direita
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.search),
-                      )
-                    ],
-                  ),*/
-                  ),
+                  )),
               Padding(
                   //imagem do mapa
                   padding: EdgeInsets.only(
@@ -206,30 +183,70 @@ class _HomeState extends State<Home> {
                     alignment: Alignment.center,
                   )),
               Padding(
-                  //mais uma search bar, essa é a de destino
                   padding: EdgeInsets.only(
+                      top: 45,
                       left: 35,
                       right:
                           35), //valores precisam ser atualizados pra ficar em função da tela
-                  child: SearchBar(
-                    textStyle: MaterialStateProperty.all(TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20)),
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(165, 5, 69, 82)),
-                    leading: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.menu)), //icone da esquerda
-                    hintText: "Destino",
-                    hintStyle: MaterialStateProperty.all(TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 20)),
-                    trailing: [
-                      //icone da direita
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.search),
-                      )
+                  child: Column(
+                    children: [
+                      TypeAheadField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          autofocus: true,
+                          controller: _destinoController,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 20,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: 'Local de Destino',
+                            hintStyle: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20,
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFF558190),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0, horizontal: 20.0),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () {
+                                // Implemente a ação desejada quando o ícone é pressionado
+                              },
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        suggestionsCallback: (pattern) {
+                          return partidaSuggestions
+                              .where((local) => local
+                                  .toLowerCase()
+                                  .contains(pattern.toLowerCase()))
+                              .toList();
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return Container(
+                            color: Color(0xFF558190), // Cor de fundo azul
+                            child: ListTile(
+                              title: Text(
+                                suggestion,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          _destinoController.text = suggestion;
+                          print('Local selecionado: $suggestion');
+                        },
+                      ),
                     ],
                   )),
               Padding(

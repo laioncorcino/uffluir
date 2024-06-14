@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
+
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class HomeMoto extends StatefulWidget {
   String message = "";
@@ -19,7 +22,22 @@ class _HomeMotoState extends State<HomeMoto> {
   TimeOfDay _hourSelect = TimeOfDay
       .now(); //esse aqui é pra ele "começar" na hora atual, explico la embaixo
   TextEditingController _hourController = TextEditingController();
-  TextEditingController _hourController2 = TextEditingController();
+  TextEditingController _hourControllerVolta = TextEditingController();
+  final TextEditingController _partidaController = TextEditingController();
+  final TextEditingController _destinoController = TextEditingController();
+  final TextEditingController _trajetoController = TextEditingController();
+
+  // Lista de sugestões para as barras de pesquisa
+  List<String> partidaSuggestions = [
+    'GRG - TODOS',
+    'GRG - Cantareira',
+    'GRG - Ed. Física',
+    'PRV - Jambeiro',
+    'PRV - Orla',
+    'VAL - Ent. Principal',
+    'VAL - Rua do Perdeu'
+  ];
+  List<String> filteredPartidaSuggestions = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,54 +114,134 @@ class _HomeMotoState extends State<HomeMoto> {
                         left: 35,
                         right:
                             35), //valores precisam ser atualizados pra ficar em função da tela
-                    child: SearchBar(
-                      //aqui é a primeira SearchBar, a de local de partida
-                      textStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      leading: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.menu)), //icone da esquerda
-                      hintText: "Local de Partida",
-                      hintStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 237, 144, 49)),
-                      trailing: [
-                        //icone da direita
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search),
-                        )
+                    child: Column(
+                      children: [
+                        TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: true,
+                            controller: _partidaController,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Local de Partida',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 20,
+                              ),
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 237, 144, 49),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () {
+                                  // Implemente a ação desejada quando o ícone é pressionado
+                                },
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return partidaSuggestions
+                                .where((local) => local
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()))
+                                .toList();
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return Container(
+                              color: Color.fromARGB(
+                                  255, 237, 144, 49), // Cor de fundo azul
+                              child: ListTile(
+                                title: Text(
+                                  suggestion,
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            _partidaController.text = suggestion;
+                            print('Local selecionado: $suggestion');
+                          },
+                        ),
                       ],
                     )),
                 Padding(
-                    //mais uma search bar, essa é a de destino
                     padding: EdgeInsets.only(
                         top: 20,
                         left: 35,
                         right:
                             35), //valores precisam ser atualizados pra ficar em função da tela
-                    child: SearchBar(
-                      textStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 237, 144, 49)),
-                      leading: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.menu)), //icone da esquerda
-                      hintText: "Destino",
-                      hintStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      trailing: [
-                        //icone da direita
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search),
-                        )
+                    child: Column(
+                      children: [
+                        TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: true,
+                            controller: _destinoController,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Local de Destino',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 20,
+                              ),
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 237, 144, 49),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () {
+                                  // Implemente a ação desejada quando o ícone é pressionado
+                                },
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return partidaSuggestions
+                                .where((local) => local
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()))
+                                .toList();
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return Container(
+                              color: Color.fromARGB(
+                                  255, 237, 144, 49), // Cor de fundo azul
+                              child: ListTile(
+                                title: Text(
+                                  suggestion,
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            _destinoController.text = suggestion;
+                            print('Local selecionado: $suggestion');
+                          },
+                        ),
                       ],
                     )),
                 Padding(
@@ -152,26 +250,66 @@ class _HomeMotoState extends State<HomeMoto> {
                         left: 35,
                         right:
                             35), //valores precisam ser atualizados pra ficar em função da tela
-                    child: SearchBar(
-                      //aqui é a primeira SearchBar, a de local de partida
-                      textStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      leading: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.menu)), //icone da esquerda
-                      hintText: "Itinerário",
-                      hintStyle: MaterialStateProperty.all(TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20)),
-                      backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 237, 144, 49)),
-                      trailing: [
-                        //icone da direita
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search),
-                        )
+                    child: Column(
+                      children: [
+                        TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: true,
+                            controller: _trajetoController,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Local Intermediário',
+                              hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 20,
+                              ),
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 237, 144, 49),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 20.0),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () {
+                                  // Implemente a ação desejada quando o ícone é pressionado
+                                },
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return partidaSuggestions
+                                .where((local) => local
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()))
+                                .toList();
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return Container(
+                              color: Color.fromARGB(
+                                  255, 237, 144, 49), // Cor de fundo azul
+                              child: ListTile(
+                                title: Text(
+                                  suggestion,
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            _trajetoController.text = suggestion;
+                            print('Local selecionado: $suggestion');
+                          },
+                        ),
                       ],
                     )),
                 Padding(
@@ -238,7 +376,7 @@ class _HomeMotoState extends State<HomeMoto> {
                               child: TextField(
                                 style: TextStyle(color: Colors.black),
                                 controller:
-                                    _hourController2, //chama o controller de hora pra atualizar o texto
+                                    _hourControllerVolta, //chama o controller de hora pra atualizar o texto
                                 decoration: InputDecoration(
                                   labelText: 'Hora Volta (opcional)',
                                   filled: true,
@@ -274,7 +412,21 @@ class _HomeMotoState extends State<HomeMoto> {
                             minimumSize: Size(150, 45),
                             textStyle: TextStyle(fontSize: 25)),
                         child: Text("Ofertar Carona"),
-                        onPressed: () => ()))
+                        onPressed: () => {
+                              FirebaseFirestore.instance
+                                  .collection('ride')
+                                  .add({
+                                'arrival_date': _dateController.text,
+                                'arrival_place': _destinoController.text,
+                                'return_time': _hourControllerVolta.text,
+                                'departure_date': _dateController.text,
+                                'departure_time': _hourController.text,
+                                'scheduled_stop': _trajetoController.text,
+                                'size': 3,
+                                'status': "ABERTO",
+                                'user_id': 'temporario'
+                              })
+                            }))
               ],
             ),
           ),
@@ -484,7 +636,8 @@ class _HomeMotoState extends State<HomeMoto> {
         if (a == 1) {
           _hourController.text = "${_hourSelect.hour}:${_hourSelect.minute}";
         } else {
-          _hourController2.text = "${_hourSelect.hour}:${_hourSelect.minute}";
+          _hourControllerVolta.text =
+              "${_hourSelect.hour}:${_hourSelect.minute}";
         } //a diferença aqui é que precisei pegar parcialmente, se não a formatação ficaria estranha. Mas nem se preocupa
       });
     }
