@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uffluir/models/singletonUser.dart';
 import 'package:uffluir/models/user.dart';
 import 'home.dart'; // Importe a página home
 
@@ -18,7 +19,6 @@ class _LoginState extends State<Login> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  UserModel? _userModel;
 
   @override
   void initState() {
@@ -79,8 +79,8 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-          Text(_userModel?.email ?? ""),
-          Text(_userModel?.nome ?? ""),
+          Text(UserModelSingleton().userModel.email ?? ""),
+          Text(UserModelSingleton().userModel.nome ?? ""),
           MaterialButton(
             color: Colors.red,
             child: const Text("Sign Out"),
@@ -88,7 +88,9 @@ class _LoginState extends State<Login> {
               await _auth.signOut();
               setState(() {
                 _user = null;
-                _userModel = null;
+                /*Resolver isto depois
+                UserModelSingleton().userModel =
+                    UserModel(); // Limpa o Singleton*/
               });
             },
           )
@@ -116,8 +118,10 @@ class _LoginState extends State<Login> {
       if (userQuery.docs.isNotEmpty) {
         DocumentSnapshot userDoc = userQuery.docs.first;
         setState(() {
-          _userModel = UserModel.fromFirestore(
-              userDoc.id, userDoc.data() as Map<String, dynamic>);
+          UserModelSingleton().userModel = UserModel.fromFirestore(
+            userDoc.id,
+            userDoc.data() as Map<String, dynamic>,
+          );
         });
         print("User ID: ${userDoc.id}");
       } else {
@@ -135,7 +139,7 @@ class _LoginState extends State<Login> {
             .doc(newUser.id)
             .set(newUser.toFirestore());
         setState(() {
-          _userModel = newUser;
+          UserModelSingleton().userModel = newUser;
         });
         print("Novo usuário adicionado ao Firestore com ID: ${newUser.id}");
       }
@@ -144,7 +148,7 @@ class _LoginState extends State<Login> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Home(userModel: _userModel!),
+          builder: (context) => Home(),
         ),
       );
     } catch (e) {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:uffluir/models/singletonUser.dart';
 import 'package:uffluir/models/user.dart';
 import 'package:uffluir/pages/search_arguments.dart';
 import 'dart:ui';
@@ -15,8 +16,7 @@ import 'resultadosBusca.dart';
 
 class Home extends StatefulWidget {
   static const String routeName = "/home";
-  final UserModel userModel;
-  Home({required this.userModel});
+  Home();
 
   @override
   State<Home> createState() => _HomeState();
@@ -70,6 +70,9 @@ class _HomeState extends State<Home> {
   }
 
   Widget build(BuildContext context) {
+    // Acessa o Singleton UserModelSingleton
+    final userModel = UserModelSingleton().userModel;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Remove o botão de voltar no topo

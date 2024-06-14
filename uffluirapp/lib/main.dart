@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         initialRoute: "/",
         routes: {
-          //Home.routeName: (context) => Home(),
+          Home.routeName: (context) => Home(),
           HomeMoto.routeName: (context) => HomeMoto(),
           Support.routeName: (context) => Support(),
           SupportMoto.routeName: (context) => SupportMoto(),
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           Login.routeName: (context) => Login(),
           //ResultadosBusca.routeName: (context) => ResultadosBusca()
         },
-        onGenerateRoute: (settings) {
+        /*onGenerateRoute: (settings) {
           // Verifica a rota sendo chamada
           if (settings.name == Home.routeName) {
             // Verifica os argumentos passados para a rota
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
           }
           // Retorna null para rotas não reconhecidas
           return null;
-        },
+        },*/
         title: "Navegação",
         debugShowCheckedModeBanner: false,
         home: Login());
