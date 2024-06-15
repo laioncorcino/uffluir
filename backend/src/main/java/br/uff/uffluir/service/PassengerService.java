@@ -38,7 +38,7 @@ public class PassengerService {
         }
     }
 
-    private void getById(Long passengerId) {
+    public void getById(Long passengerId) {
         log.info("finding passenger of id {}", passengerId);
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
