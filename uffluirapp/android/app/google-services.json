@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "26869223573-jhh270v1lgcvfe2nhrksuah0m34laskl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uffluir",
+            "certificate_hash": "261b00ec0a7a7da12292cc9cde7dfd62e12f95fa"
+          }
+        },
+        {
           "client_id": "26869223573-9of9if7e96sr39jtssjo9673h928dpir.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,13 +1,11 @@
-class Ride_user{
+class Ride_user {
+  final String ride_userId;
+  final String rideId;
+  final String userId;
 
-    final String ride_userId;
-    final String rideId;
-    final String userId;
-
-    Ride_user({
-        this.ride_userId,
-        this.rideId,
-        this. userId,
-    });
-
+  Ride_user({
+    required this.ride_userId,
+    required this.rideId,
+    required this.userId,
+  });
 }

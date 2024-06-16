@@ -1,5 +1,8 @@
 // custom_bottom_navigation_bar.dart
 import 'package:flutter/material.dart';
+import 'package:uffluir/models/singletonUser.dart';
+import 'package:uffluir/models/user.dart';
+import 'package:uffluir/pages/screen_arguments.dart';
 
 import 'home.dart';
 import 'homeMoto.dart';
@@ -20,8 +23,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
       if (role == 'motorista') {
         home_support_perfil = [
           HomeMoto.routeName,
+          SupportMoto.routeName,
           PerfilMoto.routeName,
-          SupportMoto.routeName
         ];
         return home_support_perfil;
       }
@@ -64,7 +67,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: IconButton(
             icon: Icon(Icons.person),
-            onPressed: () => {Navigator.pushNamed(context, h_s_p[2])},
+            onPressed: () => {
+              Navigator.pushNamed(context, h_s_p[2],
+                  arguments:
+                      ScreenArgumentsPerfil(UserModelSingleton().userModel))
+            },
           ),
           label: 'Perfil',
         )

@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
 class UserModel {
   String id;
   String cnh;
@@ -37,4 +40,24 @@ class UserModel {
       'photoUrl': photoUrl,
     };
   }
+}
+
+UserModel UserModelFirebase(DocumentSnapshot user) {
+  return UserModel(
+    id: user.id,
+    cnh: user.data.toString().contains('cnh') ? user.get('cnh') : '',
+    email: user.data.toString().contains('email') ? user.get('email') : '',
+    nome: user.data.toString().contains('nome') ? user.get('nome') : '',
+    score: user.data.toString().contains('score') ? user.get('score') : 0,
+    photoUrl:
+        user.data.toString().contains('photoUrl') ? user.get('photoUrl') : '',
+  );
+}
+
+Future<UserModel?> obtemInfoUsuario(String? uid) async {
+  DocumentSnapshot userDoc =
+      await FirebaseFirestore.instance.collection('user').doc(uid).get();
+
+  UserModel user = UserModelFirebase(userDoc);
+  return user;
 }

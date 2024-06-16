@@ -37,24 +37,8 @@ class MyApp extends StatelessWidget {
           MinhasCaronas.routeName: (context) => MinhasCaronas(),
           Detalhes.routeName: (context) => Detalhes(),
           Login.routeName: (context) => Login(),
-          //ResultadosBusca.routeName: (context) => ResultadosBusca()
+          ResultadosBusca.routeName: (context) => ResultadosBusca()
         },
-        /*onGenerateRoute: (settings) {
-          // Verifica a rota sendo chamada
-          if (settings.name == Home.routeName) {
-            // Verifica os argumentos passados para a rota
-            final args = settings.arguments as UserModel;
-
-            // Retorna uma nova página Home com o UserModel como parâmetro
-            return MaterialPageRoute(
-              builder: (context) {
-                return Home(userModel: args);
-              },
-            );
-          }
-          // Retorna null para rotas não reconhecidas
-          return null;
-        },*/
         title: "Navegação",
         debugShowCheckedModeBanner: false,
         home: Login());

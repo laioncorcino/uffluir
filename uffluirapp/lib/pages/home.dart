@@ -313,7 +313,7 @@ class _HomeState extends State<Home> {
                     child: Text("Buscar"),
                     onPressed: () {
                       String origem = _partidaController.text;
-                      String destino = "GRG - TODOS"; // Seu destino fixo
+                      String destino = _destinoController.text;
                       String data = _dateController.text;
 
                       if (origem.isNotEmpty && data.isNotEmpty) {
@@ -339,139 +339,6 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      /*ListView(children: [
-          //aqui começam as coisas na tela, os buscadores e a imagem
-          Stack(children: [
-            Padding(
-                padding: EdgeInsets.only(
-                    top: 45,
-                    left: 35,
-                    right:
-                        35), //valores precisam ser atualizados pra ficar em função da tela
-                child: SearchBar(
-                  //aqui é a primeira SearchBar, a de local de partida
-                  textStyle: MaterialStateProperty.all(TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
-                  leading: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.menu)), //icone da esquerda
-                  hintText: "Local de Partida",
-                  hintStyle: MaterialStateProperty.all(TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(165, 0, 79, 121)),
-                  trailing: [
-                    //icone da direita
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.search),
-                    )
-                  ],
-                )),
-            Padding(
-                //imagem do mapa
-                padding: EdgeInsets.only(
-                    top: 95,
-                    left: 35,
-                    right:
-                        35), //valores precisam ser atualizados pra ficar em função da tela
-                child: Image.asset(
-                  'images/ImagemMapa.png',
-                  height:
-                      200, //valores precisam ser atualizados pra ficar em função da tela
-                  alignment: Alignment.center,
-                )),
-            Padding(
-                //mais uma search bar, essa é a de destino
-                padding: EdgeInsets.only(
-                    top: 275,
-                    left: 35,
-                    right:
-                        35), //valores precisam ser atualizados pra ficar em função da tela
-                child: SearchBar(
-                  textStyle: MaterialStateProperty.all(TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
-                  backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(165, 0, 79, 121)),
-                  leading: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.menu)), //icone da esquerda
-                  hintText: "Destino",
-                  hintStyle: MaterialStateProperty.all(TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
-                  trailing: [
-                    //icone da direita
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.search),
-                    )
-                  ],
-                )),
-            Padding(
-                //bloco de data
-                padding: EdgeInsets.only(top: 345, left: 45, right: 45),
-                child: TextField(
-                  style: TextStyle(color: Colors.black),
-                  controller:
-                      _dateController, //chamar o controller de data pra atualizar o texto
-                  decoration: InputDecoration(
-                    labelText: 'Data',
-                    filled: true,
-                    fillColor: Color.fromARGB(255, 205, 203, 203),
-                    suffixIcon: Icon(Icons.calendar_today),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
-                  ),
-                  readOnly: true,
-                  onTap: () {
-                    _selectDate(); //chama a função de seleção de data(tá no final do codigo)
-                  },
-                )),
-            Padding(
-                //bloco de hora
-                padding: EdgeInsets.only(top: 445, left: 45, right: 45),
-                child: TextField(
-                  style: TextStyle(color: Colors.black),
-                  controller:
-                      _hourController, //chama o controller de hora pra atualizar o texto
-                  decoration: InputDecoration(
-                    labelText: 'Hora',
-                    filled: true,
-                    fillColor: Color.fromARGB(255, 205, 203, 203),
-                    suffixIcon: Icon(Icons.timer),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 0, 71, 159))),
-                  ),
-                  readOnly: true,
-                  onTap: () {
-                    _selectTime(); //chama a função de selecionar hora quando clicado
-                  },
-                )),
-            Padding(
-                //Botão de "Buscar" no fim da tela
-                padding: EdgeInsets.only(
-                    top: 545,
-                    left: 130,
-                    right:
-                        45), //valores precisam ser atualizados pra ficar em função da tela
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 0, 71, 159),
-                        foregroundColor: Color.fromARGB(255, 255, 255, 255),
-                        minimumSize: Size(15, 45),
-                        textStyle: TextStyle(fontSize: 25)),
-                    child: Text("Buscar"),
-                    onPressed: () => ()))
-          ]),
-        ]),*/
       bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
     );
   }
