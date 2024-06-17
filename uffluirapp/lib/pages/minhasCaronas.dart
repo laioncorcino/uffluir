@@ -202,7 +202,7 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
                           Navigator.pushNamed(
                             context,
                             Detalhes.routeName,
-                            arguments: ScreenArguments(2),
+                            arguments: carona,
                           );
                         },
                       ),

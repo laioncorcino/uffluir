@@ -4,53 +4,12 @@ import 'package:uffluir/models/ride.dart';
 import 'package:uffluir/models/ride_user.dart';
 import 'package:uffluir/models/singletonUser.dart';
 import 'customBottonNavigationBar.dart';
-import 'screen_arguments.dart';
-
-/*class DetalhesCarona {
-  final int id;
-  final int id_motorista;
-  final List<int> id_passageiros;
-  final String origem;
-  final String destino;
-  final String data;
-  final String status;
-  final int vagas;
-
-  DetalhesCarona({
-    required this.id,
-    required this.id_motorista,
-    required this.id_passageiros,
-    required this.origem,
-    required this.destino,
-    required this.data,
-    required this.status,
-    required this.vagas,
-  });
-}*/
 
 class Detalhes extends StatelessWidget {
   static const String routeName = "/detalhes";
+  final RideModel? rideModel; // Assim não precisa modificar a rota em main.dart
 
-  /*final List<DetalhesCarona> caronas = [
-    DetalhesCarona(
-        id: 1,
-        id_motorista: 13,
-        id_passageiros: [8, 27, 53],
-        origem: "Largo do Machado",
-        destino: "Gragoatá",
-        data: "20/05/2024 - 08:00",
-        status: "Confirmada",
-        vagas: 0),
-    DetalhesCarona(
-        id: 2,
-        id_motorista: 8,
-        id_passageiros: [49, 62, 91],
-        origem: "Largo do Machado",
-        destino: "Gragoatá",
-        data: "18/05/2024 - 08:00",
-        status: "Disponível",
-        vagas: 2)
-  ];*/
+  const Detalhes({Key? key, this.rideModel}) : super(key: key);
 
   Widget _buildDetalhesCard(String title, String content) {
     return Card(
@@ -120,9 +79,13 @@ class Detalhes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)?.settings.arguments as ScreenArgumentsCarona?;
-    if (args == null) {
+    final RideModel? args =
+        ModalRoute.of(context)?.settings.arguments as RideModel?;
+
+    // Use rideModel if passed, otherwise fallback to args
+    final ride = rideModel ?? args;
+
+    if (ride == null) {
       // Handle the case when arguments are null
       return Scaffold(
         appBar: AppBar(
@@ -167,7 +130,7 @@ class Detalhes extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                'Partida: ${args.id?.departure_place ?? ""}\nDestino: ${args.id?.arrival_place ?? ""}\nData: ${args.id?.departure_date ?? ""}\nNúmero de vagas: ${args.id?.size ?? 0}',
+                'Partida: ${ride.departure_place ?? ""}\nDestino: ${ride.arrival_place ?? ""}\nData: ${ride.departure_date ?? ""}\nNúmero de vagas: ${ride.size ?? 0}',
                 style: TextStyle(
                   color: Color(0xFF49454F), // Custom color for the text
                   fontSize: 16,
@@ -179,8 +142,7 @@ class Detalhes extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _buildDetalhesCard(
-                          "Nome do Motorista", args.id?.name ?? "")
+                      _buildDetalhesCard("Nome do Motorista", ride.name ?? "")
                     ])),
             Padding(
               padding: EdgeInsets.all(16),
@@ -193,7 +155,7 @@ class Detalhes extends StatelessWidget {
               ),
             ),
             /*FutureBuilder(
-                future: _buildDetalhesCards(args.id),
+                future: _buildDetalhesCards(ride.id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.none &&
                       snapshot.hasData == null) {
@@ -219,10 +181,10 @@ class Detalhes extends StatelessWidget {
                     minimumSize: Size(15, 45),
                     textStyle: TextStyle(fontSize: 25),
                   ),
-                  child: Text(bottomText(args.id!.status)),
+                  child: Text(bottomText(ride.status)),
                   onPressed: () async {
-                    int resultado = await adicionarNaCarona(
-                        args.id, UserModelSingleton().userModel);
+                    /*int resultado = await adicionarNaCarona(
+                        ride.id, UserModelSingleton().userModel);
                     if (resultado == 0) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -242,7 +204,7 @@ class Detalhes extends StatelessWidget {
                           content: Text("Você já está nesta corrida"),
                         ),
                       );
-                    }
+                    }*/
                   },
                 ),
               ),
