@@ -35,7 +35,7 @@ class RideModel {
         name: data['name'] ?? "",
         arrival_date: data['arrival_date'] ?? "",
         departure_date: data['departure_date'] ?? "",
-        departure_place: data[' departure_place'] ?? "",
+        departure_place: data['departure_place'] ?? "",
         arrival_place: data['arrival_place'] ?? "",
         departure_time: data['departure_time'] ?? 0,
         return_time: data['return_time'] ?? "",

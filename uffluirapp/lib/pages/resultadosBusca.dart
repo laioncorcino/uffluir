@@ -158,7 +158,7 @@ class _ResultadosBuscaState extends State<ResultadosBusca> {
                           Navigator.pushNamed(
                             context,
                             Detalhes.routeName,
-                            arguments: ScreenArgumentsCarona(resultado),
+                            arguments: resultado,
                           );
                         },
                       ),
