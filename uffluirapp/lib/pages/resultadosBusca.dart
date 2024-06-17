@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uffluir/models/ride.dart';
 import 'package:uffluir/models/user.dart';
+import 'package:uffluir/pages/detalhes.dart';
+import 'package:uffluir/pages/screen_arguments.dart';
 import 'package:uffluir/pages/search_arguments.dart';
 
 import 'customBottonNavigationBar.dart';
@@ -153,7 +155,11 @@ class _ResultadosBuscaState extends State<ResultadosBusca> {
                           ],
                         ),
                         onTap: () {
-                          // Ação ao clicar no item
+                          Navigator.pushNamed(
+                            context,
+                            Detalhes.routeName,
+                            arguments: ScreenArgumentsCarona(resultado),
+                          );
                         },
                       ),
                     ],

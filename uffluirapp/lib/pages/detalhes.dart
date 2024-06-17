@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uffluir/models/ride.dart';
+import 'package:uffluir/models/ride_user.dart';
+import 'package:uffluir/models/singletonUser.dart';
 import 'customBottonNavigationBar.dart';
 import 'screen_arguments.dart';
 
-class DetalhesCarona {
+/*class DetalhesCarona {
   final int id;
   final int id_motorista;
   final List<int> id_passageiros;
@@ -22,12 +26,12 @@ class DetalhesCarona {
     required this.status,
     required this.vagas,
   });
-}
+}*/
 
 class Detalhes extends StatelessWidget {
   static const String routeName = "/detalhes";
 
-  final List<DetalhesCarona> caronas = [
+  /*final List<DetalhesCarona> caronas = [
     DetalhesCarona(
         id: 1,
         id_motorista: 13,
@@ -46,23 +50,7 @@ class Detalhes extends StatelessWidget {
         data: "18/05/2024 - 08:00",
         status: "Disponível",
         vagas: 2)
-  ];
-
-  DetalhesCarona _getDetalhesCarona(int id) {
-    for (int i = 0; i < caronas.length; i++) {
-      if (caronas[i].id == id) return caronas[i];
-    }
-    // Retorna uma carona padrão caso o ID não seja encontrado
-    return DetalhesCarona(
-        id: 1,
-        id_motorista: 13,
-        id_passageiros: [8, 27, 53],
-        origem: "Largo do Machado",
-        destino: "Gragoatá",
-        data: "20/05/2024 - 08:00",
-        status: "Aguardando confirmação",
-        vagas: 0);
-  }
+  ];*/
 
   Widget _buildDetalhesCard(String title, String content) {
     return Card(
@@ -94,11 +82,23 @@ class Detalhes extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildDetalhesCards(DetalhesCarona carona) {
+  Future<List<Widget>> _buildDetalhesCards(RideModel? carona) async {
     final List<Widget> cards = [];
-    carona.id_passageiros.forEach((id) {
-      cards.add(_buildDetalhesCard("ID do passageiro", id.toString()));
-    });
+    final rideUsers = await getRideUsers(carona);
+    if (rideUsers == []) {
+      return _buildDetalhesCards2();
+    }
+    for (int i = 0; i < rideUsers.length; i++) {
+      cards.add(_buildDetalhesCard("Nome do passageiro", rideUsers[i]));
+    }
+    return cards;
+  }
+
+  List<Widget> _buildDetalhesCards2() {
+    final List<Widget> cards = [];
+    for (int i = 0; i < 2; i++) {
+      cards.add(_buildDetalhesCard("Nome do passageiro", "Não há passageiros"));
+    }
     return cards;
   }
 
@@ -106,6 +106,8 @@ class Detalhes extends StatelessWidget {
     switch (status) {
       case "Confirmada":
         return "Cancelar corrida";
+      case "Lotada":
+        return "Lotada";
       case "Aguardando confirmação":
         return "Cancelar solicitação";
       case "Finalizada":
@@ -118,7 +120,8 @@ class Detalhes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments?;
+    final args =
+        ModalRoute.of(context)?.settings.arguments as ScreenArgumentsCarona?;
     if (args == null) {
       // Handle the case when arguments are null
       return Scaffold(
@@ -130,8 +133,6 @@ class Detalhes extends StatelessWidget {
         ),
       );
     }
-
-    final DetalhesCarona carona = _getDetalhesCarona(args.id);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Remove o botão de voltar no topo
@@ -166,7 +167,7 @@ class Detalhes extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                'Partida: ${carona.origem}\nDestino: ${carona.destino}\nData: ${carona.data}\nNúmero de vagas: ${carona.vagas}',
+                'Partida: ${args.id?.departure_place ?? ""}\nDestino: ${args.id?.arrival_place ?? ""}\nData: ${args.id?.departure_date ?? ""}\nNúmero de vagas: ${args.id?.size ?? 0}',
                 style: TextStyle(
                   color: Color(0xFF49454F), // Custom color for the text
                   fontSize: 16,
@@ -179,7 +180,7 @@ class Detalhes extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildDetalhesCard(
-                          "ID do motorista", carona.id_motorista.toString())
+                          "Nome do Motorista", args.id?.name ?? "")
                     ])),
             Padding(
               padding: EdgeInsets.all(16),
@@ -191,13 +192,23 @@ class Detalhes extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch, // Ajuste aqui
-                children: _buildDetalhesCards(carona),
-              ),
-            ),
+            /*FutureBuilder(
+                future: _buildDetalhesCards(args.id),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none &&
+                      snapshot.hasData == null) {
+                    return CircularProgressIndicator();
+                  }
+                  List<Widget>? cards = snapshot.data;
+                  return Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.stretch, // Ajuste aqui
+                      children: cards!,
+                    ),
+                  );
+                }),*/
             Padding(
               padding: EdgeInsets.all(15),
               child: Center(
@@ -208,9 +219,30 @@ class Detalhes extends StatelessWidget {
                     minimumSize: Size(15, 45),
                     textStyle: TextStyle(fontSize: 25),
                   ),
-                  child: Text(bottomText(carona.status)),
-                  onPressed: () {
-                    print('Botão de detalhes pressionado');
+                  child: Text(bottomText(args.id!.status)),
+                  onPressed: () async {
+                    int resultado = await adicionarNaCarona(
+                        args.id, UserModelSingleton().userModel);
+                    if (resultado == 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Adicionado com Sucesso"),
+                        ),
+                      );
+                    }
+                    if (resultado == 2) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Corrida Lotada"),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Você já está nesta corrida"),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),

@@ -428,7 +428,7 @@ class _HomeMotoState extends State<HomeMoto> {
                                 'departure_time': _hourController.text,
                                 'scheduled_stop': _trajetoController.text,
                                 'size': 3,
-                                'status': "ABERTO",
+                                'status': "Disponível",
                                 'rider_id': userModel.id
                               })
                             }))

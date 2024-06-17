@@ -65,20 +65,20 @@ class RideModel {
 
 class RideService {
   List<RideModel> _instanciaListaRideModel(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
+    return snapshot.docs.map((ride) {
       return RideModel(
-          id: doc.id,
-          name: doc['name'] ?? "",
-          arrival_date: doc['arrival_date'] ?? "",
-          arrival_place: doc['arrival_place'] ?? "",
-          departure_date: doc['departure_date'] ?? "",
-          departure_place: doc['departure_place'] ?? "",
-          departure_time: doc['departure_time'] ?? 0,
-          return_time: doc['return_time'] ?? "",
-          scheduled_stop: doc['scheduled_stop'] ?? "",
-          size: doc['size'] ?? 0,
-          status: doc['status'] ?? "",
-          rider_id: doc['rider_id'] ?? "");
+          id: ride.id,
+          name: ride['name'] ?? "",
+          arrival_date: ride['arrival_date'] ?? "",
+          arrival_place: ride['arrival_place'] ?? "",
+          departure_date: ride['departure_date'] ?? "",
+          departure_place: ride['departure_place'] ?? "",
+          departure_time: ride['departure_time'] ?? 0,
+          return_time: ride['return_time'] ?? "",
+          scheduled_stop: ride['scheduled_stop'] ?? "",
+          size: ride['size'] ?? 0,
+          status: ride['status'] ?? "",
+          rider_id: ride['rider_id'] ?? "");
     }).toList();
   }
 
@@ -91,4 +91,44 @@ class RideService {
 
     return listaCaronas;
   }
+}
+
+RideModel RideModelFirebase(DocumentSnapshot ride) {
+  return RideModel(
+    id: ride.id,
+    name: ride.data.toString().contains('name') ? ride.get('name') : '',
+    arrival_date: ride.data.toString().contains('arrival_date')
+        ? ride.get('arrival_date')
+        : '',
+    arrival_place: ride.data.toString().contains('arrival_place')
+        ? ride.get('arrival_place')
+        : '',
+    departure_date: ride.data.toString().contains('departure_date')
+        ? ride.get('departure_date')
+        : '',
+    departure_place: ride.data.toString().contains('departure_place')
+        ? ride.get('departure_place')
+        : '',
+    departure_time: ride.data.toString().contains('departure_time')
+        ? ride.get('departure_time')
+        : 0,
+    return_time: ride.data.toString().contains('return_time')
+        ? ride.get('return_time')
+        : '',
+    scheduled_stop: ride.data.toString().contains('scheduled_stop')
+        ? ride.get('scheduled_stop')
+        : '',
+    size: ride.data.toString().contains('size') ? ride.get('size') : 0,
+    status: ride.data.toString().contains('status') ? ride.get('status') : '',
+    rider_id:
+        ride.data.toString().contains('rider_id') ? ride.get('rider_id') : '',
+  );
+}
+
+Future<RideModel?> obtemInfoCarona(String? uid) async {
+  DocumentSnapshot rideride =
+      await FirebaseFirestore.instance.collection('ride').doc(uid).get();
+
+  RideModel ride = RideModelFirebase(rideride);
+  return ride;
 }
