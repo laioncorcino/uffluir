@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uffluir/models/ride.dart';
+import 'package:uffluir/models/singletonUser.dart';
+import 'package:uffluir/models/user.dart';
 import 'dart:ui';
 import 'customBottonNavigationBar.dart';
 import 'detalhes.dart';
@@ -76,6 +80,36 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
 
   @override
   Widget build(BuildContext context) {
+    Future<List<RideModel>> fetchRides(String userID) async {
+      print("ID do usuário: ${userID}");
+      List<RideModel> rides = [];
+      QuerySnapshot rideUserSnapshot = await FirebaseFirestore.instance
+          .collection('ride_user')
+          .where('user_id', isEqualTo: userID)
+          .get();
+
+      List<String> rideIds =
+          rideUserSnapshot.docs.map((doc) => doc['ride_id'] as String).toList();
+
+      print("IDs corridas: ${rideIds}");
+
+      for (String rideId in rideIds) {
+        DocumentSnapshot rideSnapshot = await FirebaseFirestore.instance
+            .collection('ride')
+            .doc(rideId)
+            .get();
+        if (rideSnapshot.exists) {
+          rides.add(RideModel.fromFirestore(
+              rideSnapshot.id, rideSnapshot.data() as Map<String, dynamic>));
+        }
+      }
+
+      return rides;
+    }
+
+    final user = UserModelSingleton().userModel;
+    final String userId = user.id;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Remove o botão de voltar no topo
@@ -98,73 +132,86 @@ class _MinhasCaronasState extends State<MinhasCaronas> {
         ]),
         backgroundColor: Color(0xFF054552),
       ),
-      body: ListView.builder(
-        itemCount: caronas.length,
-        itemBuilder: (context, index) {
-          final carona = caronas[index];
-          return Card(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  color: Color(0xFF054552),
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                    carona.confirmada,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.directions_car, color: Color(0xFF2D6371)),
-                  title: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // Centralize os textos
+      body: FutureBuilder<List<RideModel>>(
+        future: fetchRides(userId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Erro ao carregar as caronas'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('Nenhuma carona encontrada'));
+          } else {
+            List<RideModel> caronas = snapshot.data!;
+            return ListView.builder(
+              itemCount: caronas.length,
+              itemBuilder: (context, index) {
+                final carona = caronas[index];
+                return Card(
+                  margin: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        carona.origem,
-                        style: TextStyle(
-                          color: Color(0xFF2D6371),
+                      Container(
+                        width: double.infinity,
+                        color: Color(0xFF054552),
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          carona.status,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Text(
-                        carona.data,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                      ListTile(
+                        leading: Icon(Icons.directions_car,
+                            color: Color(0xFF2D6371)),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              carona.departure_place,
+                              style: TextStyle(
+                                color: Color(0xFF2D6371),
+                              ),
+                            ),
+                            Text(
+                              carona.departure_date,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              carona.arrival_place,
+                              style: TextStyle(
+                                color: Color(0xFF2D6371),
+                              ),
+                            ),
+                            Text(
+                              carona.name,
+                              style: TextStyle(
+                                color: Color(0xFF2D6371),
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        carona.destino,
-                        style: TextStyle(
-                          color: Color(0xFF2D6371),
-                        ),
-                      ),
-                      Text(
-                        carona.funcao,
-                        style: TextStyle(
-                          color: Color(0xFF2D6371),
-                          decoration: TextDecoration.underline,
-                        ),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            Detalhes.routeName,
+                            arguments: ScreenArguments(2),
+                          );
+                        },
                       ),
                     ],
                   ),
-                  onTap: () {
-                    // Ação ao clicar no item
-                    Navigator.pushNamed(
-                      context,
-                      Detalhes.routeName,
-                      arguments: ScreenArguments(carona.id),
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
+                );
+              },
+            );
+          }
         },
       ),
       bottomNavigationBar: CustomBottomNavigationBar(role: 'passageiro'),
