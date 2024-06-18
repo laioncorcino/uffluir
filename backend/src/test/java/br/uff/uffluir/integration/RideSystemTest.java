@@ -54,10 +54,11 @@ public class RideSystemTest extends RideInfraTest {
     public void createRide() {
         RideRequest rideRequest = new RideRequest(
                 "driver@id.uff.br",
-                "Location A",
-                "Location B",
-                "2023-12-31T10:00:00",
-                "2023-12-31T10:30:00",4
+                "Instituto de Computação",
+                "Campus Gragoatá",
+                "2023-06-20 10:00:00",
+                "2023-06-20 10:30:00",
+                4
         );
 
         ResponseEntity<RideResponse> postResponse = doPostRide(rideRequest);
