@@ -20,10 +20,10 @@ public class DriverService {
     private DriverRepository driverRepository;
 
     public Driver createDriver(DriverRequest driverRequest) {
-        return saveDriver(new Driver(driverRequest));
+        return saveDoctor(new Driver(driverRequest));
     }
 
-    private Driver saveDriver(Driver driver) {
+    private Driver saveDoctor(Driver driver) {
         try {
             log.info("Saving driver from cnh {}", driver.getCnh());
             return driverRepository.save(driver);
@@ -38,11 +38,11 @@ public class DriverService {
         }
     }
 
-    private void getById(Long driverId) {
+    private Driver getById(Long driverId) {
         log.info("finding driver of id {}", driverId);
         Optional<Driver> driver = driverRepository.findById(driverId);
 
-        driver.orElseThrow(() -> {
+        return driver.orElseThrow(() -> {
             log.error("driver of id {} not found", driverId);
             return new NotFoundException("driver not found");
         });

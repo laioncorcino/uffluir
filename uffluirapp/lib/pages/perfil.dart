@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uffluir/models/singletonUser.dart';
+import 'package:uffluir/models/user.dart';
+import 'package:uffluir/pages/screen_arguments.dart';
 import 'dart:ui';
 import 'customBottonNavigationBar.dart';
 
@@ -17,6 +20,9 @@ Size size = view.physicalSize;
 class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ScreenArgumentsPerfil;
+    final UserModel userModel = args.userModel;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Remove o botão de voltar no topo
@@ -33,7 +39,7 @@ class _PerfilState extends State<Perfil> {
                       )))),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/perfilMoto');
+              Navigator.pushNamed(context, '/perfilMoto', arguments: args);
             }, // Image tapped
             child: Image.asset(
               'images/passageiro-icon.png',
@@ -55,11 +61,10 @@ class _PerfilState extends State<Perfil> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                  padding: EdgeInsets.only(top: 30, left: 40),
-                  child: Image.asset(
-                    'images/avatar.png',
-                    width: 90,
-                  )),
+                  padding: EdgeInsets.only(top: 35, left: 40),
+                  child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(userModel.photoUrl))),
               Flexible(
                   child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -70,7 +75,7 @@ class _PerfilState extends State<Perfil> {
                     padding: EdgeInsets.only(top: 35, left: 15),
                     width: 200,
                     height: 55,
-                    child: Text('Nome do Usuário',
+                    child: Text(userModel.nome,
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
@@ -78,8 +83,8 @@ class _PerfilState extends State<Perfil> {
                     padding: EdgeInsets.only(top: 0, left: 15),
                     width: 200,
                     height: 20,
-                    child: Text('usuario@email.com',
-                        style: TextStyle(fontSize: 13)),
+                    child:
+                        Text(userModel.email, style: TextStyle(fontSize: 13)),
                   ),
                   Flexible(
                       child: Row(

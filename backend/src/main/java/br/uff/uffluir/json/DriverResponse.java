@@ -9,12 +9,14 @@ public class DriverResponse {
     private Long driverId;
     private String name;
     private String email;
+    private String pass;
     private String cnh;
 
     public DriverResponse(Driver driver) {
         this.driverId = driver.getDriverId();
         this.name = driver.getName();
         this.email = driver.getEmail();
+        this.pass = driver.getPass();
         this.cnh = driver.getCnh();
     }
 
