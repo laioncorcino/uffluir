@@ -52,11 +52,19 @@ public class RideSystemTest extends RideInfraTest {
     @Test
     @DisplayName("deve_criar_corrida_com_sucesso")
     public void createRide() {
-        RideRequest rideRequest = new RideRequest("driver1@example.com", "Location A", "Location B", "2023-12-31T10:00:00", "2023-12-31T10:30:00",4);
+        RideRequest rideRequest = new RideRequest(
+                "driver1@example.com",
+                "Location A",
+                "Location B",
+                "2023-12-31T10:00:00",
+                "2023-12-31T10:30:00",4
+        );
+
         ResponseEntity<RideResponse> postResponse = doPostRide(rideRequest);
 
         assertThat(postResponse).isNotNull();
-        assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
         assertThat(postResponse.getBody()).isNotNull();
         assertThat(postResponse.getBody().getDriver().getEmail()).isEqualTo("driver4@example.com");
         assertThat(postResponse.getBody().getDeparturePlace()).isEqualTo("Location A");
