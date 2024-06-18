@@ -3,15 +3,11 @@ package br.uff.uffluir.wrapper;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
-@Getter
-@Setter
 public class PageableResponse<T> extends PageImpl<T> {
 
     private boolean first;
@@ -38,4 +34,23 @@ public class PageableResponse<T> extends PageImpl<T> {
         this.numberOfElements = numberOfElements;
     }
 
+    @Override
+    public boolean isFirst() {
+        return first;
+    }
+
+    @Override
+    public boolean isLast() {
+        return last;
+    }
+
+    @Override
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    @Override
+    public int getNumberOfElements() {
+        return numberOfElements;
+    }
 }

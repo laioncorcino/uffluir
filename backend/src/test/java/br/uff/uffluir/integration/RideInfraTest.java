@@ -24,7 +24,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = DEFINED_PORT)
-public class RideInfraTest {
+public abstract class RideInfraTest {
 
     protected static final String RIDE_API = "http://localhost:8080/api/v1/rides";
 
