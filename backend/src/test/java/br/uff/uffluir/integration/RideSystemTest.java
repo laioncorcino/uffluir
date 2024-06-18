@@ -53,7 +53,7 @@ public class RideSystemTest extends RideInfraTest {
     @DisplayName("deve_criar_corrida_com_sucesso")
     public void createRide() {
         RideRequest rideRequest = new RideRequest(
-                "driver1@example.com",
+                "driver@id.uff.br",
                 "Location A",
                 "Location B",
                 "2023-12-31T10:00:00",
@@ -66,11 +66,11 @@ public class RideSystemTest extends RideInfraTest {
         assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         assertThat(postResponse.getBody()).isNotNull();
-        assertThat(postResponse.getBody().getDriver().getEmail()).isEqualTo("driver4@example.com");
-        assertThat(postResponse.getBody().getDeparturePlace()).isEqualTo("Location A");
-        assertThat(postResponse.getBody().getArrivalPlace()).isEqualTo("Location B");
-        assertThat(postResponse.getBody().getDepartureTime()).isEqualTo("2023-12-31T10:00:00");
-        assertThat(postResponse.getBody().getArrivalTime()).isEqualTo("2023-12-31T10:30:00");
+        assertThat(postResponse.getBody().getDriver().getEmail()).isEqualTo("driver@id.uff.br");
+        assertThat(postResponse.getBody().getDeparturePlace()).isEqualTo("Instituto de Computação");
+        assertThat(postResponse.getBody().getArrivalPlace()).isEqualTo("Campus Gragoatá");
+        assertThat(postResponse.getBody().getDepartureTime()).isEqualTo("2023-06-20 10:00:00");
+        assertThat(postResponse.getBody().getArrivalTime()).isEqualTo("2023-06-20 10:30:00");
         assertThat(postResponse.getBody().getSize()).isEqualTo(4);
     }
 
