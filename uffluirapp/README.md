@@ -1,16 +1,10 @@
-# uffluir
+APLICATIVO DE CARONAS
+Foi utilizado o Flutter para a confecção do frontend.
+Foi utilizado o Firebase para a confecção do backend.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+EXECUTAR O APLICATIVO
+  1 - Certifique-se de ter o ambiente Flutter devidamente configurado
+  2 - Clone este repositório
+  3 - Navegue até este diretório e rode: flutter pub get
+  4 - Para construir a APK e instalar em um dispositivo móvel Android, execute um dos comandos abaixo (consulte a documentação do Flutter para mais detalhes):
+    flutter build apk  ou  flutter build apk --release
