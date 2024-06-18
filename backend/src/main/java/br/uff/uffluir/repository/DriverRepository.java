@@ -16,4 +16,6 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Transactional
     void updateCarByDriverId(@Param("carId") Long carId, @Param("driverId") Long driverId);
 
+    Driver findByEmail(String email);
+
 }
