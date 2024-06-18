@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uffluir/firebase_options.dart';
 import 'package:uffluir/models/user.dart';
+import 'package:uffluir/pages/chat.dart';
 import 'package:uffluir/pages/login.dart';
 import 'pages/home.dart';
 import 'pages/support.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
           MinhasCaronas.routeName: (context) => MinhasCaronas(),
           Detalhes.routeName: (context) => Detalhes(),
           Login.routeName: (context) => Login(),
-          ResultadosBusca.routeName: (context) => ResultadosBusca()
+          ResultadosBusca.routeName: (context) => ResultadosBusca(),
+          Chat.routeName: (context) => Chat(),
         },
         title: "Navegação",
         debugShowCheckedModeBanner: false,

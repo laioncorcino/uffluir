@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:uffluir/models/ride.dart';
 import 'package:uffluir/models/ride_user.dart';
 import 'package:uffluir/models/singletonUser.dart';
+import 'package:uffluir/models/user.dart';
+import 'package:uffluir/pages/chat.dart';
+import 'package:uffluir/pages/home.dart';
 import 'customBottonNavigationBar.dart';
 
 class Detalhes extends StatelessWidget {
@@ -41,11 +44,11 @@ class Detalhes extends StatelessWidget {
     );
   }
 
-  Future<List<Widget>> _buildDetalhesCards(RideModel? carona) async {
+  Future<List<Widget>?> _buildDetalhesCards(RideModel? carona) async {
     final List<Widget> cards = [];
     final rideUsers = await getRideUsers(carona);
     if (rideUsers == []) {
-      return _buildDetalhesCards2();
+      return null; //_buildDetalhesCards2();
     }
     for (int i = 0; i < rideUsers.length; i++) {
       cards.add(_buildDetalhesCard("Nome do passageiro", rideUsers[i]));
@@ -59,6 +62,35 @@ class Detalhes extends StatelessWidget {
       cards.add(_buildDetalhesCard("Nome do passageiro", "Não há passageiros"));
     }
     return cards;
+  }
+
+  Future<List<Map<String, dynamic>>> fetchRideUsers(String rideId) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Primeira consulta para obter os user_id da coleção ride_user
+    QuerySnapshot rideUserSnapshot = await firestore
+        .collection('ride_user')
+        .where('ride_id', isEqualTo: rideId)
+        .get();
+
+    List<String> userIds =
+        rideUserSnapshot.docs.map((doc) => doc['user_id'] as String).toList();
+
+    if (userIds.isEmpty) {
+      return [];
+    }
+
+    // Segunda consulta para obter os detalhes dos usuários na coleção user
+    QuerySnapshot userSnapshot = await firestore
+        .collection('user')
+        .where(FieldPath.documentId, whereIn: userIds)
+        .get();
+
+    List<Map<String, dynamic>> users = userSnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+
+    return users;
   }
 
   String bottomText(String status) {
@@ -154,23 +186,49 @@ class Detalhes extends StatelessWidget {
                 ),
               ),
             ),
-            /*FutureBuilder(
-                future: _buildDetalhesCards(ride.id),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.none &&
-                      snapshot.hasData == null) {
-                    return CircularProgressIndicator();
-                  }
-                  List<Widget>? cards = snapshot.data;
-                  return Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.stretch, // Ajuste aqui
-                      children: cards!,
-                    ),
-                  );
-                }),*/
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchRideUsers(ride.id),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text("Erro ao carregar os dados"));
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text("Nenhum passageiro encontrado"));
+                }
+                return Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: snapshot.data!
+                        .where((user) => user['name'] != ride.name)
+                        .map((user) {
+                      print(user['id']);
+                      print("ID: ${ride.rider_id}");
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Chat(
+                                userName: user[
+                                    'name'], // Passa apenas o nome do usuário
+                              ),
+                            ),
+                          );
+                        },
+                        child: _buildDetalhesCard(
+                          "Nome do passageiro",
+                          user['name'] ?? 'Nome não disponível',
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              },
+            ),
             Padding(
               padding: EdgeInsets.all(15),
               child: Center(
@@ -182,30 +240,7 @@ class Detalhes extends StatelessWidget {
                     textStyle: TextStyle(fontSize: 25),
                   ),
                   child: Text(bottomText(ride.status)),
-                  onPressed: () async {
-                    /*int resultado = await adicionarNaCarona(
-                        ride.id, UserModelSingleton().userModel);
-                    if (resultado == 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Adicionado com Sucesso"),
-                        ),
-                      );
-                    }
-                    if (resultado == 2) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Corrida Lotada"),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Você já está nesta corrida"),
-                        ),
-                      );
-                    }*/
-                  },
+                  onPressed: () async {},
                 ),
               ),
             ),
