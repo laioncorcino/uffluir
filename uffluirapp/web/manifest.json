@@ -1,6 +1,6 @@
 {
-    "name": "uffluir",
-    "short_name": "uffluir",
+    "name": "uffluirapp",
+    "short_name": "uffluirapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
