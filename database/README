@@ -1,0 +1,13 @@
+Desenvolvedor: Matheus Marques
+
+Requisitos: Python e Firebase
+
+Descrição:
+    Com o intuito de otimizar a inserção de dados no banco de dados (firestore), foram desenvolvidos dois scripts:
+
+    - import_ride.py
+    Insere dados referente à coleção 'ride'. É mais simples, porém mais limitado.
+    - insert_firestore.py
+    Insere dados em qualquer coleção passada como parâmetro. Mais complexo, porém mais completo.
+
+    Para fins de testes, foi utilizado o CharGPT para escrever os arquivos json.

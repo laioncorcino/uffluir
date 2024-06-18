@@ -1,0 +1,16 @@
+{
+  "ride_user": {
+    "ride_user1": {
+      "ride_id": "ride1",
+      "user_id": "kSu7W13IAIa4YIBsHBcTqxtAWjF2"
+    },
+    "ride_user2": {
+      "ride_id": "ride2",
+      "user_id": "yefHrNSXai6sNwjszZIA"
+    },
+    "ride_user3": {
+      "ride_id": "ride3",
+      "user_id": "yefHrNSXai6sNwjszZIA"
+    }
+  }
+}

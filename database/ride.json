@@ -1,0 +1,43 @@
+{
+  "ride": {
+    "ride1": {
+      "arrival_date": "2024-06-23",
+      "arrival_place": "PRV - Jambeiro",
+      "departure_date": "2024-06-23",
+      "departure_place": "GRG - Ed. Física",
+      "departure_time": "19:55",
+      "name": "Thiago Serra Dias Aguiar",
+      "return_time": "",
+      "rider_id": "kSu7W13IAIa4YIBsHBcTqxtAWjF2",
+      "scheduled_stop": "GRG - Ed. Física",
+      "size": 1,
+      "status": "Disponível"
+    },
+    "ride2": {
+      "arrival_date": "2024-07-12",
+      "arrival_place": "PRV - Orla",
+      "departure_date": "2024-07-12",
+      "departure_place": "VAL - Rua do Perdeu",
+      "departure_time": "08:00",
+      "name": "Matheus Marques Barros",
+      "return_time": "",
+      "rider_id": "yefHrNSXai6sNwjszZIA",
+      "scheduled_stop": "GRG - Ed. Física",
+      "size": 3,
+      "status": "Disponível"
+    },
+    "ride3": {
+      "arrival_date": "2024-05-26",
+      "arrival_place": "GRG - Cantareira",
+      "departure_date": "2024-05-26",
+      "departure_place": "VAL - Ent. Principal",
+      "departure_time": "11:30",
+      "name": "Matheus Marques Barros",
+      "return_time": "",
+      "rider_id": "yefHrNSXai6sNwjszZIA",
+      "scheduled_stop": "",
+      "size": 0,
+      "status": "Lotada"
+    }
+  }
+}
