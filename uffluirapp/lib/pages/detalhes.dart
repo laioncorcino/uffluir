@@ -240,7 +240,30 @@ class Detalhes extends StatelessWidget {
                     textStyle: TextStyle(fontSize: 25),
                   ),
                   child: Text(bottomText(ride.status)),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    int resultado = await adicionarNaCarona(
+                        ride, UserModelSingleton().userModel);
+                    if (resultado == 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Adicionado com Sucesso"),
+                        ),
+                      );
+                    }
+                    if (resultado == 2) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Corrida Lotada"),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Você já está nesta corrida"),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

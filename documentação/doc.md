@@ -1,16 +1,13 @@
-# uffluir
+Link para figma
+https://www.figma.com/design/3ycsuC88YCc4BBzx4i57VZ/App-carona?node-id=119-4219&t=X9Mtx5nEPHM3jDfu-0
 
-A new Flutter project.
+Link para GitHub
+https://github.com/laioncorcino/uffluir
 
-## Getting Started
+Link para diagrama EAP
+https://app.diagrams.net/#G1nNj_7gSnUZuMaTMvL4X87cJ65LqJyFQk#%7B"pageId"%3A"JF6l4YUFnRNsDmvgWAm-"%7D
 
-This project is a starting point for a Flutter application.
+Planejamento de Atividades Inicial
+https://docs.google.com/spreadsheets/d/1uSMt8k8TpkwX7GCOqUJ2B0VkybAFYTxz-_5RL9SsNbc/edit#gid=350064141
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

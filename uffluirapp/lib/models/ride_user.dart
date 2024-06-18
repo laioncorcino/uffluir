@@ -83,7 +83,6 @@ Future<int> adicionarNaCarona(RideModel? ride, UserModel user) async {
         'size': ride.size - 1,
         'status': status,
         'rider_id': ride.rider_id,
-        'size': ride.size - 1
       });
     }
   } catch (e) {
